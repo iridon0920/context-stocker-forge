@@ -1,11 +1,56 @@
 ---
-description: ストレージのセットアップ状態を検証する
+description: セットアップ検証と初期設定ガイドを表示する
 ---
 
-ストレージのセットアップ状態を検証する。Skillツールで `{{plugin_name}}:{{product_prefix}}-deal` スキルを呼び出し、「セットアップ検証」セクションの手順に従って実行すること。
+ストレージのセットアップ状態を検証し、未設定項目の設定ガイドを表示する。Skillツールで `{{plugin_name}}:{{product_prefix}}-deal` スキルを呼び出し、「セットアップ確認」セクションの手順に従って実行すること。
+
+## Phase 1: ストレージ検証
 
 以下を検証する:
 1. ストレージへの接続確認
 2. 必要なディレクトリ/ページ構造の存在確認
 3. INDEXページの整合性確認
 4. 不足があれば初期構造の作成を提案
+
+## Phase 2: 未設定項目チェック
+
+ストレージ検証後、以下の設定ページの存在と内容を確認し、未設定の項目を一覧表示する。
+
+チェック対象:
+
+| 設定項目 | 確認先ページ | 設定コマンド | 重要度 |
+|---------|------------|------------|--------|
+| Slackチャンネル | `設定/Slackチャンネル` | `/{{product_prefix}}-admin-slack` | 高（デイリーログ・コンテキスト復元に必要） |
+| 競合情報 | `設定/競合情報` | `/{{product_prefix}}-admin-competitors` | 中（商談準備資料に必要） |
+| 料金体系 | `設定/料金体系` | `/{{product_prefix}}-admin-pricing` | 中（見積作成に必要） |
+| Backlog監視プロジェクト | `設定/Backlogプロジェクト` | `/{{product_prefix}}-admin-backlog` | 低（Backlog連携時のみ） |
+| KPI目標 | `管理/KPI/YYYY` | `/{{product_prefix}}-admin-kpi-set target` | 低（レポート生成時に必要） |
+| OKR | `管理/OKR/YYYY` | `/{{product_prefix}}-admin-okr-set set` | 低（レポート生成時に必要） |
+
+## Phase 3: 結果表示
+
+検証結果と未設定項目を以下の形式で表示する:
+
+```
+## セットアップ状況
+
+### ストレージ接続: ✅ 正常
+
+### 設定状況:
+- ❌ Slackチャンネル — 未設定です。デイリーログやコンテキスト復元でSlack情報を参照するために必要です
+  → `/{{product_prefix}}-admin-slack` で設定してください
+- ❌ 競合情報 — 未設定です。商談準備資料で競合比較を行うために必要です
+  → `/{{product_prefix}}-admin-competitors` で設定してください
+- ❌ 料金体系 — 未設定です。概算見積作成に必要です
+  → `/{{product_prefix}}-admin-pricing` で設定してください
+- ⬚ Backlog監視プロジェクト — 未設定（Backlog連携が不要なら設定不要）
+  → 必要な場合は `/{{product_prefix}}-admin-backlog` で設定してください
+- ⬚ KPI目標 — 未設定（レポート生成時に必要）
+  → `/{{product_prefix}}-admin-kpi-set target` で設定してください
+- ⬚ OKR — 未設定（レポート生成時に必要）
+  → `/{{product_prefix}}-admin-okr-set set` で設定してください
+
+💡 まずは重要度「高」の項目から設定することをお勧めします。
+```
+
+設定済みの項目は ✅ で表示し、コマンド案内は省略する。
