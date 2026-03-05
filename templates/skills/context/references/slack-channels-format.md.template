@@ -1,0 +1,42 @@
+# Slack チャンネル設定フォーマット（{{product_name}}用）
+
+## 保存先
+
+{{storage_settings_location_description}}
+- ページ名: `設定/Slackチャンネル設定`
+
+## ページ内容のフォーマット
+
+```markdown
+# Slack 重点チャンネル設定
+
+| チャンネル名 | チャンネルID | リンク | 用途 |
+|------------|------------|-------|------|
+{{#default_slack_channels}}
+| {{channel_name}} | CXXXXXXXXX | [#{{channel_name}}](https://{{slack_workspace_domain}}/archives/CXXXXXXXXX) | {{channel_purpose}} |
+{{/default_slack_channels}}
+```
+
+## デフォルト値
+
+設定ページが存在しない場合は以下のチャンネルをデフォルトとして使用する：
+
+{{#default_slack_channels}}
+- `{{channel_name}}`
+{{/default_slack_channels}}
+
+## 利用箇所
+
+- **コンテキスト復元** ({{product_prefix}}-deal): {{product_name}}案件関連のSlack検索時にチャンネルを絞り込み
+- **コンテキスト保存** ({{product_prefix}}-deal): Slack情報の補足取得時にチャンネルを絞り込み
+
+## 更新手順
+
+1. {{storage_search_cmd}} で `設定/Slackチャンネル設定` を検索
+   - 見つからない場合は旧名 `[CFG] Slackチャンネル設定` でも検索
+2. {{storage_read_cmd}} でページ内容を取得
+3. テーブルの行を追加・削除
+   - チャンネルIDは Slack MCP の `slack_search_channels` で取得
+   - リンクは `https://{{slack_workspace_domain}}/archives/{チャンネルID}` 形式
+4. **書き込み確認プロトコル** に従い差分を表示して確認を取る
+5. {{storage_update_cmd}} でページ内容を更新

@@ -1,0 +1,7 @@
+---
+description: {{product_name}}案件の日次活動ログを記録する
+---
+
+{{product_name}}案件の日次活動ログを作成する。Skillツールで `{{plugin_name}}:{{product_prefix}}-deal` スキルを呼び出し、「日次活動ログ」セクションの手順に従って実行すること。
+
+全データソース（カレンダー、Slack、メール、Backlog課題等）から本日の活動を自動収集し、活動ログとして保存する。

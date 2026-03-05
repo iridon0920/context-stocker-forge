@@ -1,0 +1,304 @@
+---
+name: {{product_prefix}}-knowledge
+description: >
+  {{product_name}}ナレッジの保存・検索スキル。{{storage_description}}でチーム共有のナレッジベース
+  {{#knowledge_categories}}（{{category_name}}）{{/knowledge_categories}}を構築・参照する。
+version: 5.0.0
+---
+
+# {{product_name}}ナレッジ管理
+
+## {{storage_name}}情報
+
+| 項目 | 値 |
+|------|-----|
+| プロジェクトキー | `{{project_key}}` |
+| ストレージ | {{storage_name}} |
+| ナレッジ | `ナレッジ/{カテゴリ}/{トピック名}` のページ |
+| INDEXページ | `Home`（リンク集）+ 個別INDEXページ（{{product_prefix}}-dealスキルと共有） |
+| 共有範囲 | チーム共有（{{team_scope}}） |
+
+### 階層構造
+
+{{storage_hierarchy_description}}
+ナレッジは以下の階層で管理する：
+
+```
+ナレッジ/
+{{#knowledge_categories}}
+  {{category_path}}/
+{{#has_subcategories}}
+{{#subcategories}}
+    {{subcategory_name}}/
+{{/subcategories}}
+{{/has_subcategories}}
+{{/knowledge_categories}}
+```
+
+## ナレッジカテゴリの定義
+
+| カテゴリ | ページ名パターン | 保存する内容 |
+|---------|----------------|-------------|
+{{#knowledge_categories}}
+| {{category_name}} | `ナレッジ/{{category_path}}/{トピック}` | {{category_content_description}} |
+{{/knowledge_categories}}
+
+{{#product_subcategories}}
+### {{subcategory_parent}}カテゴリの選択
+
+{{subcategory_parent}}ナレッジの場合、以下のカテゴリから適切なものを選択する。
+
+| カテゴリ | 対象範囲 |
+|---------|---------|
+{{#subcategories}}
+| {{subcategory_name}} | {{subcategory_scope}} |
+{{/subcategories}}
+
+複数カテゴリにまたがるナレッジの場合は、主要なカテゴリに分類し、概要で関連カテゴリを記載する。
+{{/product_subcategories}}
+
+{{storage_mcp_tool_table_knowledge}}
+
+## INDEXページ構成
+
+ナレッジに関連するINDEXページは以下:
+
+| INDEXページ | 対象カテゴリ |
+|-----------|-----------|
+{{#knowledge_index_mapping}}
+| `INDEX/{{index_name}}` | {{mapped_categories}} |
+{{/knowledge_index_mapping}}
+
+## セッション初期化
+
+{{product_prefix}}-dealスキルの「セッション初期化」で取得済みの場合はスキップ。
+未取得の場合は同じ手順でプロジェクトID、Homeページ、必要なINDEXサブページの内容を取得する。
+
+---
+
+## 自動ナレッジ参照ルール
+
+Claudeは以下の場面で **自動的に** ナレッジを検索し、回答に活用する。
+
+### 必ず検索する場面
+
+{{#auto_search_rules}}
+{{auto_search_index}}. **{{search_trigger}}**
+   - 例: {{search_example}}
+   - → {{storage_search_cmd}} で `ナレッジ/{{search_category_path}}/` + 検索キーワードで検索
+{{#search_fallback_note}}
+   - {{search_fallback_note}}
+{{/search_fallback_note}}
+{{#search_caution}}
+   - **注意**: {{search_caution}}
+{{/search_caution}}
+
+{{/auto_search_rules}}
+
+### 検索しない場面
+
+- 一般的なIT知識の質問（{{product_name}}に無関係）
+- 雑談
+- {{product_name}}以外の案件
+
+{{#official_sources}}
+### 情報ソースの優先順位（重要）
+
+{{product_name}}の機能や技術仕様に関する質問には、以下の優先順位で情報を取得する：
+
+1. **ストレージ（チームナレッジベース）** — 最優先で検索
+2. **{{official_source_name}}** — ナレッジベースに情報がない場合のフォールバック
+
+**{{official_source_name}}の使い分け:**
+
+| 情報の種別 | 参照先 |
+|-----------|--------|
+{{#official_source_urls}}
+| {{source_type}} | `{{source_url}}` |
+{{/official_source_urls}}
+
+**ソースに関する厳格なルール:**
+- **{{official_source_name}}以外をソースにしないこと**（ブログ記事、Qiita、Stack Overflow等は使用不可）
+- ナレッジベースの情報を返す際も、「最新情報は公式ドキュメントも確認してください」と補足する
+- ユーザーに出典URLを提示する際は、**日本語ページがあればそちらを優先**して提示する
+{{/official_sources}}
+
+### 検索の実行方法
+
+**ステップ1: ストレージ検索（最優先）**
+
+1. まず該当カテゴリのINDEXサブページで該当エントリを探す（高速）
+2. INDEXで見つかったら {{storage_read_cmd}} で詳細取得
+3. INDEXで見つからない場合は {{storage_search_cmd}} でキーワード検索（INDEX未登録への対応）
+   - 新命名規約: `ナレッジ/` + キーワード
+   - 旧命名規約: `[KB:` + キーワード（マイグレーション前のページに対応）
+4. ヒットしたページを {{storage_read_cmd}} で内容取得
+5. ページ内容から関連部分を抽出して回答に組み込む
+
+{{#official_sources}}
+**ステップ2: {{official_source_name}}検索（ナレッジベースに情報がない場合）**
+
+ストレージに該当する情報がない場合のみ、{{official_source_name}}から情報を取得する：
+
+{{#official_source_search_steps}}
+{{step_index}}. {{step_description}}
+{{/official_source_search_steps}}
+{{/official_sources}}
+
+### 回答時のルール
+
+- ナレッジベースから得た情報は「チームナレッジベースの記録によると」と出典を明示する
+- ナレッジページ内の出典リンクがあれば、それも併せて提示する
+- 情報が古い可能性がある場合は注記する（特に価格・規約系）
+{{#official_sources}}
+- **ナレッジベースに情報がある場合でも**、「最新情報は{{official_source_name}}も合わせてご確認ください」と補足する
+- ナレッジベースに情報がない場合は{{official_source_name}}から取得し、ナレッジ保存を提案する
+- ナレッジベースの内容と公式サイトの情報が矛盾する場合は公式サイトを優先し、ナレッジ更新を提案する
+- **{{official_source_name}}以外のソースは使用しない**
+{{/official_sources}}
+
+---
+
+## ナレッジ保存
+
+セッションで得られた{{product_name}}ナレッジを保存する手順。
+
+### 1. カテゴリとトピックの解釈
+
+引数を `カテゴリ/トピック` として解釈する。
+カテゴリが省略された場合やあいまいな場合は、内容から最適なカテゴリを提案する。
+
+{{#product_subcategories}}
+**{{subcategory_parent}}ナレッジの場合:**
+カテゴリを `{{subcategory_parent}}/{サブカテゴリ名}` として解釈する。サブカテゴリ名が省略されている場合は内容から適切なカテゴリを提案する。
+{{/product_subcategories}}
+
+### 2. セッション内容の整理
+
+今回のセッションで得られたナレッジを整理する：
+
+- **タイトル**: ナレッジの簡潔なタイトル（ページ名の最後のセグメントになる）
+- **要約**: 1〜3行の概要
+- **本文**: 詳細な内容（手順、仕様、規約内容、数値データ等）
+- **出典・根拠**: どこからの情報か。URLリンク付きで記載（公式ドキュメント、パートナーポータル、社内検証等）
+- **関連リンク**: 参照したSlackメッセージ、Backlog課題、ドキュメントのURL
+
+### 3. ストレージへの保存
+
+#### 3-1. 既存ページの確認
+
+INDEXおよび {{storage_search_cmd}} で `ナレッジ/{カテゴリパス}/{トピック名}` を検索し、既存ページがあるか確認する。
+旧命名規約 `[KB:カテゴリ] トピック名` でも検索する。
+
+#### 3-2. ページ内容の準備
+
+**既存ページがある場合:**
+1. {{storage_read_cmd}} で現在の内容を取得
+2. 内容をマージ（重複を避け、新情報を追記・上書き。マージルールは `references/knowledge-format.md` を参照）
+3. 出典・根拠セクションに新しいソースをリンク付きで追加
+
+**新規作成の場合:**
+- `references/knowledge-format.md` のフォーマットに従ってページ内容を作成
+- 出典・根拠、関連リンクを可能な限りリンク付きで記載
+
+#### 3-3. 保存時の注意
+
+- 機密性の高い情報（APIキー、パスワード等）は絶対に含めない
+- 価格や売上の具体的数値はチームメンバーがアクセスする前提で記載可否を確認する
+{{#migration_warnings}}
+- ⚠️ {{warning_text}}
+{{/migration_warnings}}
+
+#### 3-4. 類似エントリチェック（新規作成時のみ）
+
+新規ナレッジの場合、`references/similarity-check.md`（{{product_prefix}}-dealスキル配下）のプロトコルに従い既存のナレッジページと照合する。
+既存ナレッジの上書き更新ではこのステップをスキップする。
+
+#### 3-5. 書き込み確認（必須）
+
+**書き込み確認プロトコル**（{{product_prefix}}-dealスキル参照）に従い、ページの内容を表示して確認を取る。
+
+#### 3-6. 保存実行
+
+{{storage_save_knowledge_procedure}}
+
+### 4. 確認
+
+```
+ナレッジ保存完了
+
+■ カテゴリ: [カテゴリパス]
+■ トピック: [トピック名]
+■ ページ: ナレッジ/{カテゴリパス}/{トピック名}
+■ 操作: 新規作成 or 更新
+■ 出典: [リンク付き出典リスト]
+```
+
+---
+
+## ナレッジ検索
+
+ストレージ上の{{product_name}}ナレッジを検索する手順。
+
+### 1. 検索の実行
+
+#### 1-1. INDEX検索（高速）
+
+該当カテゴリのINDEXサブページからキーワードに合致するエントリを探す:
+{{#knowledge_index_mapping}}
+- {{mapped_categories_short}} → `INDEX/{{index_name}}`
+{{/knowledge_index_mapping}}
+
+{{#product_subcategories}}
+サブカテゴリ名が明確な場合はINDEX内の該当セクションを優先的に確認する。
+{{/product_subcategories}}
+
+#### 1-2. カテゴリ指定検索（カテゴリが明確な場合）
+
+{{storage_search_cmd}} で `ナレッジ/{カテゴリ}/ 検索キーワード` で検索。
+
+{{#product_subcategories}}
+{{subcategory_parent}}ナレッジの場合はさらにサブカテゴリまで指定可能：
+`ナレッジ/{{subcategory_parent}}/{サブカテゴリ}/ 検索キーワード`
+{{/product_subcategories}}
+
+#### 1-3. 全文検索（カテゴリが不明な場合）
+
+{{storage_search_cmd}} でプレフィックスなしのキーワードで検索。
+
+#### 1-4. 旧命名規約の検索（互換性）
+
+新命名規約で見つからない場合は、旧命名規約でも検索する：
+{{storage_search_cmd}} で `[KB:` + キーワードで検索。
+旧命名規約のページが見つかった場合は、マイグレーション（ページ名変更）を提案する。
+
+#### 1-5. 案件コンテキストも含めた横断検索
+
+ナレッジだけでなく、案件コンテキスト内にも関連情報がある場合があるため、
+プレフィックスなしのキーワード検索も併用する。
+
+### 2. 結果の表示
+
+```
+「[キーワード]」の検索結果
+
+■ ナレッジ:
+  1. ナレッジ/{カテゴリ}/{トピック名} — 概要（最終更新: YYYY-MM-DD）[出典](URL)
+  2. ...
+
+■ 案件コンテキスト:
+  1. コンテキスト/{分類}/{顧客名}/{案件名} — 関連する記述の抜粋
+  2. ...
+
+該当なし の場合: 「ナレッジベースにはまだ情報がありません。」
+```
+
+### 3. フォローアップ
+
+- 「詳しく見たい項目はありますか？」と確認
+- ページの内容を表示する場合は全文ではなく関連部分を抽出
+- ナレッジが不足している場合は「この内容をナレッジとして保存しますか？」と提案
+
+## 詳細リファレンス
+
+- **`references/knowledge-format.md`** — ナレッジのフォーマット定義とマージルール

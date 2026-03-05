@@ -1,0 +1,6 @@
+---
+description: {{product_name}}案件のコンテキストを復元する
+argument-hint: "[顧客名 例: ABC株式会社, XYZテック]"
+---
+
+{{product_name}}案件「$ARGUMENTS」のコンテキストを復元する。Skillツールで `{{plugin_name}}:{{product_prefix}}-deal` スキルを呼び出し、「コンテキスト復元」セクションの手順に従って実行すること。

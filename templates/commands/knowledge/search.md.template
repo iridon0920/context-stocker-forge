@@ -1,0 +1,6 @@
+---
+description: {{product_name}}ナレッジを検索する
+argument-hint: "[検索キーワード 例: AIエージェント設定, ライセンス料金]"
+---
+
+{{product_name}}のナレッジベースから「$ARGUMENTS」を検索する。Skillツールで `{{plugin_name}}:{{product_prefix}}-knowledge` スキルを呼び出し、「ナレッジ検索」セクションの手順に従って実行すること。

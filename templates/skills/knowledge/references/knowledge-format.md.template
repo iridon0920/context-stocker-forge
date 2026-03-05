@@ -1,0 +1,104 @@
+# ナレッジフォーマット定義
+
+## ページメタデータ
+
+| 項目 | 用途 |
+|------|------|
+| ページ名 | `ナレッジ/{カテゴリパス}/{トピック名}` |
+| 内容 | ナレッジ本文（以下のMarkdownフォーマット） |
+{{#storage_auto_fields}}
+| {{field_name}} | {{field_description}} |
+{{/storage_auto_fields}}
+
+### カテゴリとページ名の対応
+
+| カテゴリ | ページ名パターン | 例 |
+|---------|----------------|---|
+{{#knowledge_categories}}
+| {{category_name}} | `ナレッジ/{{category_path}}/{トピック名}` | `ナレッジ/{{category_path}}/{{category_example_topic}}` |
+{{/knowledge_categories}}
+
+{{#product_subcategories}}
+### {{subcategory_parent}}カテゴリの選択
+
+{{subcategory_parent}}ナレッジの場合、以下のカテゴリから適切なものを選択する。
+
+| カテゴリ | 対象範囲 |
+|---------|---------|
+{{#subcategories}}
+| {{subcategory_name}} | {{subcategory_scope}} |
+{{/subcategories}}
+
+複数{{subcategory_parent_item}}にまたがるナレッジの場合は、主要なカテゴリに分類し、概要で関連{{subcategory_parent_item}}を記載する。
+{{/product_subcategories}}
+
+## 共通フォーマット
+
+すべてのナレッジで使用する基本構造。
+
+```markdown
+## 概要
+
+1〜3行でこのナレッジの要点を説明する。
+
+## 詳細
+
+本文。構造化された情報を記載する。
+必要に応じてサブセクション（###）を使って整理する。
+
+## 関連リンク
+
+| リソース | リンク |
+|---------|-------|
+| 公式ドキュメント | [タイトル]({URL}) |
+{{#has_partner_portal}}
+| パートナーポータル | [ページ名]({URL}) |
+{{/has_partner_portal}}
+| Backlog課題 | [{課題キー}]({{backlog_base_url}}/view/{課題キー}) |
+| Slackスレッド | [Slack](https://{{slack_workspace_domain}}/archives/{チャンネルID}/p{タイムスタンプ}) |
+
+※ 該当するリソースのみ記載。
+
+## 出典・根拠
+
+- [{情報源1の名称}]({URL})（確認日: YYYY-MM-DD）
+- [{情報源2の名称}]({URL})（確認日: YYYY-MM-DD）
+- 社内検証（確認日: YYYY-MM-DD）
+
+## 更新履歴
+
+- YYYY-MM-DD: 初版作成
+- YYYY-MM-DD: [更新内容]
+```
+
+## リンクの記載ルール
+
+ナレッジページ内の各セクションで、参照可能なリソースはすべてMarkdownリンクとして記載する。
+
+{{storage_link_format_rules_knowledge}}
+
+### 出典リンクの重要性
+
+出典・根拠セクションでは、**必ずリンク付き**で情報源を記載する。
+URLが取得できない場合（口頭確認、社内検証等）はリンクなしで記載するが、可能な限りリンクを付与する。
+
+## カテゴリ別の追加セクション
+
+{{#knowledge_category_sections}}
+### {{section_category_name}}
+
+```markdown
+{{section_content}}
+```
+
+{{/knowledge_category_sections}}
+
+## マージのルール
+
+既存のナレッジページに情報を追加する場合：
+
+1. **概要**: 内容が変わった場合のみ更新
+2. **詳細**: 新情報を追記、古い情報は更新または更新履歴に移動
+3. **関連リンク**: 新しいリソースがあれば行を追加。リンク切れに気づいたら更新
+4. **出典・根拠**: 新しいソースを追加。URLを可能な限りリンク付きで記載
+5. **更新履歴**: 更新内容を追記（削除しない）

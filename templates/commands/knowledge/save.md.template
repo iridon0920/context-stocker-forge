@@ -1,0 +1,8 @@
+---
+description: {{product_name}}ナレッジを保存する
+argument-hint: "[ナレッジの内容や要約]"
+---
+
+{{product_name}}のナレッジを保存する。Skillツールで `{{plugin_name}}:{{product_prefix}}-knowledge` スキルを呼び出し、「ナレッジ保存」セクションの手順に従って実行すること。
+
+保存対象: 会話内で得られた{{product_name}}に関する技術情報、ノウハウ、Tips、パートナー規約、料金情報など。

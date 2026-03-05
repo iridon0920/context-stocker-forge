@@ -1,0 +1,7 @@
+---
+description: INDEXページ群を全再構築する
+---
+
+INDEXページ群（Home + 個別INDEX）を全再構築する。Skillツールで `{{plugin_name}}:{{product_prefix}}-deal` スキルを呼び出し、「INDEX再構築」セクションの手順に従って実行すること。
+
+ストレージ内の全ページをスキャンし、INDEXページを最新状態に再構築する。

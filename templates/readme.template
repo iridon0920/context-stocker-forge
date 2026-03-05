@@ -1,0 +1,48 @@
+# {{plugin_name}}
+
+{{product_name}}案件のコンテキスト管理＆ナレッジベースを{{team_name}}でチーム共有するプラグイン。
+
+## 概要
+
+context-stocker-forge により自動生成されたプラグインです。
+
+## Skills
+
+- `{{product_prefix}}-deal` — {{product_name}}案件コンテキストの保存・復元・活動ログ・レポート生成
+- `{{product_prefix}}-knowledge` — {{product_name}}ナレッジの保存・検索
+
+## Commands
+
+### 案件・顧客管理（deal）
+- `/{{product_prefix}}-deal-load [顧客名]` — 案件コンテキストの復元
+- `/{{product_prefix}}-deal-save` — 案件コンテキストの保存
+
+### ナレッジ管理（knowledge）
+- `/{{product_prefix}}-knowledge-save` — ナレッジの保存
+- `/{{product_prefix}}-knowledge-search [キーワード]` — ナレッジの検索
+
+### ログ・レポート（log）
+- `/{{product_prefix}}-log-daily` — 日次活動ログの記録
+- `/{{product_prefix}}-log-report [月次|QBR]` — 活動レポート生成
+
+### 管理・メンテ（admin）
+- `/{{product_prefix}}-admin-index` — INDEX再構築
+- `/{{product_prefix}}-admin-setup` — セットアップ検証
+- `/{{product_prefix}}-admin-slack` — Slackチャンネル設定
+- `/{{product_prefix}}-admin-backlog` — Backlog監視プロジェクト設定
+- `/{{product_prefix}}-admin-stale` — 鮮度管理（更新停滞検出）
+- `/{{product_prefix}}-admin-migrate` — フォーマットマイグレーション
+
+### ドキュメント生成（doc）
+- `/{{product_prefix}}-doc-prep [顧客名]` — 商談準備資料
+- `/{{product_prefix}}-doc-proposal [顧客名]` — 提案書ドラフト
+- `/{{product_prefix}}-doc-estimate [顧客名]` — 見積書ドラフト
+- `/{{product_prefix}}-doc-hearing [顧客名]` — ヒアリングリスト
+- `/{{product_prefix}}-doc-config [顧客名]` — 設定値一覧
+- `/{{product_prefix}}-doc-testcases [顧客名]` — テストケース
+
+## セットアップ
+
+1. プラグインをインストール
+2. `/{{product_prefix}}-admin-setup` を実行してストレージの状態を確認
+3. 必要に応じて `/{{product_prefix}}-admin-slack` でSlackチャンネルを設定

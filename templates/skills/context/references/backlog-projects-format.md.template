@@ -1,0 +1,49 @@
+# Backlog プロジェクト設定フォーマット（{{product_name}}用）
+
+## 保存先
+
+{{storage_settings_location_description}}
+- ページ名: `設定/Backlogプロジェクト設定`
+
+## ページ内容のフォーマット
+
+```markdown
+# Backlog 監視プロジェクト設定
+
+| プロジェクト名 | プロジェクトキー | プロジェクトID | リンク | 用途 | 監視対象 |
+|--------------|---------------|-------------|-------|------|---------|
+{{#default_backlog_projects}}
+| {{project_display_name}} | {{project_key_value}} | NNNNNN | [{{project_key_value}}]({{backlog_base_url}}/projects/{{project_key_value}}) | {{project_purpose}} | {{monitoring_type}} |
+{{/default_backlog_projects}}
+```
+
+## デフォルト値
+
+設定ページが存在しない場合は以下のプロジェクトをデフォルトとして使用する：
+
+{{#default_backlog_projects}}
+- `{{project_key_value}}`（{{monitoring_type}}を監視）
+{{/default_backlog_projects}}
+
+## 監視対象の種別
+
+| 種別 | 説明 | デイリーログでのチェック内容 |
+|------|------|------------------------|
+| 課題更新 | プロジェクト内の課題の更新をチェック | `get_issues` で直近24時間に更新された課題を取得 |
+| Wiki更新 | プロジェクト内のWiki更新をチェック | `get_wiki_pages` で直近24時間に更新されたWikiページを取得 |
+
+## 利用箇所
+
+- **デイリーログ** ({{product_prefix}}-deal): 登録プロジェクトの課題更新・Wiki更新を日次チェック
+- **コンテキスト復元** ({{product_prefix}}-deal): 関連するBacklog課題の検索範囲として使用
+- **活動レポート** ({{product_prefix}}-deal): レポート対象のプロジェクトを特定
+
+## 更新手順
+
+1. {{storage_search_cmd}} で `設定/Backlogプロジェクト設定` を検索
+2. {{storage_read_cmd}} でページ内容を取得
+3. テーブルの行を追加・削除
+   - プロジェクトIDは Backlog MCP の `get_project` で取得（`projectKey` を指定）
+   - リンクは `{{backlog_base_url}}/projects/{プロジェクトキー}` 形式
+4. **書き込み確認プロトコル** に従い差分を表示して確認を取る
+5. {{storage_update_cmd}} でページ内容を更新

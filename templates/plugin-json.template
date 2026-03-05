@@ -1,0 +1,9 @@
+{
+  "name": "{{plugin_name}}",
+  "version": "1.0.0",
+  "description": "{{product_name}}の案件コンテキスト＆ナレッジをBacklog Wikiでチーム共有管理。顧客→案件の階層構造、{{sales_framework}}営業情報、意思決定ログ。デフォルトはBacklog Wikiのみ参照、外部データソース（Google Calendar・Drive・Gmail・Slack・Backlog課題）はオンデマンド取得（デイリーログ時のみ全自動参照）。日次活動ログ、活動レポート、鮮度管理。5分割INDEX + Homeで全体俯瞰。ガイドライン参照による業務ドキュメント生成（商談準備・提案書・見積書・ヒアリングリスト・テストケース）。",
+  "author": {
+    "name": "{{team_name}}"
+  },
+  "keywords": ["{{product_prefix}}", "{{product_name}}", "backlog", "wiki", "context", "team", "knowledge", "report", "calendar", "gmail", "drive", "KPI"]
+}

@@ -1,0 +1,229 @@
+# INDEXページフォーマット定義
+
+## 概要
+
+INDEXは **Homeページ（トップ）** と **{{index_page_count}}つの個別INDEXページ** で構成する。
+Homeは各INDEXへのリンク集、個別INDEXが実際のエントリ一覧を持つ。
+
+## 階層構造
+
+{{storage_hierarchy_description}}
+本プラグインでは以下の階層構造を使用する。
+
+### ツリー構造
+
+```
+コンテキスト/
+{{#customer_classifications}}
+  {{classification_name}}/                ← {{classification_description_short}}
+    {顧客名}/              ← 顧客ページ
+      {案件名}             ← 案件ページ
+{{/customer_classifications}}
+ナレッジ/
+{{#knowledge_categories}}
+  {{category_path}}/
+{{#has_subcategories}}
+{{#subcategories}}
+    {{subcategory_name}}/               ← {{subcategory_scope_short}}
+{{/subcategories}}
+{{/has_subcategories}}
+{{/knowledge_categories}}
+活動ログ/
+  YYYY-MM/
+    YYYY-MM-DD              ← 日次活動ログ
+INDEX/
+{{#index_pages}}
+  {{index_page_name}}               ← {{index_page_description}}
+{{/index_pages}}
+管理/
+  KPI/
+    YYYY                     ← 年度KPI目標・実績
+  OKR/
+    YYYY                     ← 年度OKR・進捗
+設定/
+  Slackチャンネル設定
+  Backlogプロジェクト設定
+```
+
+### ページ名の命名規約
+
+| 種別 | ページ名パターン | 例 |
+|------|----------------|---|
+{{#customer_classifications}}
+| 顧客ページ（{{classification_label}}） | `コンテキスト/{{classification_name}}/{顧客名}` | `コンテキスト/{{classification_name}}/{{classification_example}}` |
+{{/customer_classifications}}
+| 案件ページ | `コンテキスト/{分類}/{顧客名}/{案件名}` | `コンテキスト/{{customer_classification_example_path}}` |
+{{#knowledge_categories}}
+{{#has_subcategories}}
+| {{category_name}}ナレッジ | `ナレッジ/{{category_path}}/{サブカテゴリ}/{トピック名}` | `ナレッジ/{{category_path}}/{{category_example_subcategory}}/{{category_example_topic}}` |
+{{/has_subcategories}}
+{{^has_subcategories}}
+| {{category_name}}ナレッジ | `ナレッジ/{{category_path}}/{トピック名}` | `ナレッジ/{{category_path}}/{{category_example_topic}}` |
+{{/has_subcategories}}
+{{/knowledge_categories}}
+| 日次活動ログ | `活動ログ/YYYY-MM/YYYY-MM-DD` | `活動ログ/2026-03/2026-03-02` |
+| INDEXページ | `INDEX/{カテゴリ名}` | `INDEX/顧客・案件` |
+| KPI管理 | `管理/KPI/YYYY` | `管理/KPI/2026` |
+| OKR管理 | `管理/OKR/YYYY` | `管理/OKR/2026` |
+| 設定 | `設定/{設定名}` | `設定/Slackチャンネル設定` |
+
+### 顧客分類の基準
+
+{{#customer_classifications}}
+- **{{classification_name}}**: {{classification_description}}
+{{/customer_classifications}}
+
+{{#product_subcategories}}
+### {{subcategory_parent}}カテゴリ一覧
+
+| カテゴリ | 対象範囲 |
+|---------|---------|
+{{#subcategories}}
+| {{subcategory_name}} | {{subcategory_scope}} |
+{{/subcategories}}
+{{/product_subcategories}}
+
+---
+
+## Homeページ
+
+Homeページはリンク集のみ。各INDEXページへの導線を提供する。
+
+### Markdownフォーマット
+
+```markdown
+# {{product_name}}チーム ナレッジベース
+
+> 最終更新: YYYY-MM-DD
+
+## INDEX
+
+| カテゴリ | ページ | エントリ数 |
+|---------|-------|-----------|
+{{#index_pages}}
+| {{index_page_display_name}} | [INDEX/{{index_page_name}}]({{storage_page_url_prefix}}INDEX/{{index_page_name}}) | N件 |
+{{/index_pages}}
+
+## 管理
+
+| ページ | 説明 |
+|-------|------|
+| [管理/KPI/YYYY]({{storage_page_url_prefix}}管理/KPI/YYYY) | FY KPI目標・実績 |
+| [管理/OKR/YYYY]({{storage_page_url_prefix}}管理/OKR/YYYY) | FY OKR・進捗 |
+
+## クイックリンク
+
+- [設定/Slackチャンネル設定]({{storage_page_url_prefix}}設定/Slackチャンネル設定)
+- [設定/Backlogプロジェクト設定]({{storage_page_url_prefix}}設定/Backlogプロジェクト設定)
+```
+
+---
+
+## 個別INDEXページ
+
+{{#index_pages}}
+### INDEX/{{index_page_name}}
+
+```markdown
+# INDEX — {{index_page_display_name}}
+
+> 最終更新: YYYY-MM-DD
+> 総エントリ数: N件{{index_page_header_extra}}
+
+{{index_page_body_template}}
+```
+
+{{/index_pages}}
+
+---
+
+## フォーマットのルール
+
+1. **Homeページ**: 各INDEXへのリンクテーブルのみ。エントリ数を集計表示
+2. **個別INDEXページ**: 該当カテゴリのエントリ一覧を管理
+{{#index_format_rules}}
+3. {{rule_description}}
+{{/index_format_rules}}
+4. **リンク列/出典列**: 関連リソースをリンク付きで記載
+5. **ソート順**: 各テーブル内は最終更新日の降順
+6. **空カテゴリの扱い**: エントリがないカテゴリは見出しのみで「（エントリなし）」。連続する空カテゴリはまとめて1行にしてよい
+7. **wikiIdメタデータ（⚡パフォーマンス最適化）**: INDEXページの各エントリ行に `wikiId` を記載する。これにより、コンテキスト復元時に {{storage_search_cmd}} での検索ステップをスキップし、{{storage_read_cmd}} で直接ページ内容を取得できる
+
+### wikiIdの記載ルール
+
+- INDEXテーブルの各行に `wikiId` 列を追加する（テーブルの最後の列）
+- `wikiId` は {{storage_create_cmd}} / {{storage_search_cmd}} の応答に含まれる数値ID
+- コンテキスト保存（`/{{product_prefix}}-deal-save`）でエントリ追加時に、保存結果のwikiIdをINDEXに記録する
+- INDEX再構築（`/{{product_prefix}}-admin-index`）時に全エントリのwikiIdを {{storage_search_cmd}} から取得して一括記載する
+- wikiIdが不明な既存エントリは空欄とし、次回アクセス時に補完する
+
+## INDEX更新のルール
+
+### エントリ追加時
+1. 該当INDEXページのテーブルに行を追加
+2. 関連リンクを可能な限りリンク付きで記載
+3. INDEXページのヘッダー（総エントリ数・最終更新日）を更新
+4. Homeページのエントリ数を更新
+
+### エントリ更新時
+1. 該当INDEXページの行を更新
+2. INDEXページの最終更新日を更新
+
+### 顧客ステータス変更時（{{customer_classification_from}}→{{customer_classification_to}}）
+1. `INDEX/顧客・案件` の該当行を「{{customer_classification_from}}」→「{{customer_classification_to}}」セクションに移動
+2. ページ名の変更は `context-format.md` の手順に従う
+
+### INDEX再構築時（/{{product_prefix}}-index-rebuild）
+1. {{storage_list_all_pages_cmd}} で全ページを取得
+2. ページ名のパスプレフィックスで分類：
+{{#index_rebuild_classification_rules}}
+   - `{{path_prefix}}` → {{classification_target}}
+{{/index_rebuild_classification_rules}}
+   - `活動ログ/` → INDEXには含めない
+   - `管理/` → INDEXには含めない（Home直接リンクで管理）
+   - `設定/` → INDEXには含めない
+   - `INDEX/` → INDEXページ自体（再構築対象）
+3. **顧客/案件の階層判定**: パスの深さで区別
+   - `コンテキスト/{分類}/{顧客名}` → 顧客ページ（案件一覧を持つ）
+   - `コンテキスト/{分類}/{顧客名}/{案件名}` → 案件ページ（INDEXには案件行として表示）
+4. **旧命名規約の検出**: `[CTX]` や `[KB:*]` プレフィックスのページはマイグレーション対象として別途リスト
+5. 各ページの更新日フィールドから最終更新日を取得
+6. **wikiIdの記録**: {{storage_search_cmd}} の応答に含まれる各ページの `id` をwikiIdとして記録する
+7. ステータスや概要は {{storage_read_cmd}} でページ内容を読み取って抽出
+8. 各INDEXページを上記フォーマットで再構築（wikiId列を含む）
+9. Homeページのエントリ数を更新
+10. **書き込み確認プロトコル** に従い、再構築内容を表示して確認を取る
+11. {{storage_update_cmd}} / {{storage_create_cmd}} で各INDEXページとHomeページを保存
+
+### 旧命名規約からのマイグレーション
+
+`[CTX]` / `[KB:*]` / `[CFG]` 形式のページ名が検出された場合：
+
+```
+⚠️ 旧命名規約のページが見つかりました
+
+■ マイグレーション対象:
+  1. [CTX] {顧客名} → コンテキスト/{分類}/{顧客名}
+  2. [KB:{カテゴリ}] {トピック名} → ナレッジ/{カテゴリパス}/{トピック名}
+  3. [CFG] {設定名} → 設定/{設定名}
+
+ページ名を変更しますか？（内容はそのまま維持されます）
+```
+
+ユーザーが承認したら、各ページに対して {{storage_rename_cmd}} で新しいページ名に変更する。
+なお、顧客の分類が不明な場合は確認を取る。
+
+### 注意事項
+- `管理/` プレフィックスのページはINDEXに含めない（Homeページから直接リンク）
+- `設定/` プレフィックスのページはINDEXに含めない
+- `INDEX/` プレフィックスのページは再構築対象として扱う（存在確認→上書き or 新規作成）
+- ページが削除されている場合はINDEXからも削除する
+- INDEXの更新は保存操作の最終ステップとして実行する（データ本体の保存が成功してから）
+
+## リンクの記載ルール
+
+INDEXテーブル内のリンク列・出典列には、以下の形式で関連リソースへのリンクを記載する。
+
+{{storage_link_format_rules_index}}
+
+複数のリンクがある場合は ` / ` で区切る（例: `[Slack](URL) / [Backlog](URL)`）。
