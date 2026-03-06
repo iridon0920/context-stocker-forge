@@ -50,8 +50,20 @@ context-stocker-forge/
 - `templates/` 配下の `.template` ファイルを1つでも変更 → **必須**
 - `storage-adapters/` を変更 → **必須**（チェック3, 10は最低限）
 - `skills/generate/references/` を変更 → **必須**（チェック3, 4, 5は最低限）
+- `skills/generate/SKILL.md` を変更 → **必須**（チェック7は最低限）
 - `README.md` や `CLAUDE.md` のみの変更 → チェック不要
 - `LICENSE` のみの変更 → チェック不要
+
+#### 連動更新が必要なファイル群
+
+以下のファイル群は内容が連動しており、片方を変更したらもう片方の更新漏れがないか確認すること:
+
+| 変更元 | 連動先 | 連動内容 |
+|--------|--------|----------|
+| `skills/generate/references/wizard-steps.md` | `skills/generate/SKILL.md` | ウィザードのステップ数・構成 |
+| `templates/commands/**/*.template` | `README.md` | コマンド一覧・コマンド数 |
+| `templates/commands/**/*.template` の参照セクション名 | `templates/skills/context/SKILL.md.template` | セクション名の一致 |
+| `templates/skills/context/SKILL.md.template` の判断フロー | `templates/commands/**/*.template` | コマンド名の存在 |
 
 #### 検証の原則
 
