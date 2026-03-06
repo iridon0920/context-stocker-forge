@@ -61,13 +61,9 @@ knowledge_categories:
   - name: 業務フロー・ガイドライン
     description: "構築・移行・運用等の手順やベストプラクティス"
     required: true
-  - name: パートナーナレッジ
-    description: "パートナー規約・契約条件・協業ノウハウ"
-    required: false
-  - name: 施策
-    description: "過去の施策と実績・KPI・振り返り"
-    required: false
 ```
+
+※ 必要に応じて追加カテゴリ（パートナーナレッジ、施策等）はストレージのディレクトリ追加で対応可能。
 
 ## sales_framework_fields[]（カスタム時のみ）
 
@@ -138,10 +134,10 @@ sales_framework_fields:
 
 ```yaml
 kpi:
-  revenue_categories:
-    - ライセンス
-    - プロサービス
+  revenue_categories: []  # 未設定。/{prefix}-admin-kpi-set で設定
 ```
+
+※ 売上内訳カテゴリは事業の収益構造に依存するため、デフォルトでは未設定。生成後に `/{prefix}-admin-kpi-set` で設定する（例: 「プロダクト, サービス」「ライセンス, プロサービス」「コンサル, 運用保守」等）。未設定の場合、KPIテーブルは売上合計のみで内訳行なしで動作する。
 
 ### デフォルトKPI指標（固定、設定不要）
 

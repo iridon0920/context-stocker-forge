@@ -51,9 +51,6 @@
 | リソース | リンク |
 |---------|-------|
 | 公式ドキュメント | [タイトル]({URL}) |
-{{#has_partner_portal}}
-| パートナーポータル | [ページ名]({URL}) |
-{{/has_partner_portal}}
 | Backlog課題 | [{課題キー}]({{backlog_base_url}}/view/{課題キー}) |
 | Slackスレッド | [Slack](https://{{slack_workspace_domain}}/archives/{チャンネルID}/p{タイムスタンプ}) |
 

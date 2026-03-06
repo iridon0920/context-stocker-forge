@@ -211,7 +211,6 @@
 | `{{^drive_folder_id}}` | 上記の否定 | フォルダ未設定時の代替テキスト |
 | `{{#has_subcategories}}` | ナレッジカテゴリに `sub_categories` が存在 | サブカテゴリ表示 |
 | `{{^has_subcategories}}` | 上記の否定 | サブカテゴリなし時のテキスト |
-| `{{#has_partner_portal}}` | パートナーポータル設定が存在 | パートナー情報セクション |
 | `{{#data_sources.slack.enabled}}` | Slackが有効 | Slack関連セクション |
 | `{{#data_sources.google_calendar.enabled}}` | Google Calendar有効 | カレンダーセクション |
 | `{{#data_sources.gmail.enabled}}` | Gmail有効 | メールセクション |
