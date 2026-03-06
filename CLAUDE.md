@@ -79,6 +79,12 @@ context-stocker-forge/
 - **0.x.y（パッチ）**: テンプレートの文言修正、バグ修正、ドキュメント更新
 - `plugin.json` と `marketplace.json` の `version` は常に同じ値にすること
 
+### バージョンバンプの運用
+
+- **コミットごとにバンプする**。変更内容に応じてマイナー/パッチを判断する
+- バンプ対象ファイル: `.claude-plugin/plugin.json` と `.claude-plugin/marketplace.json` の2箇所
+- バージョンバンプのコミットメッセージは `v{version}: {変更概要}` の形式にする
+
 ## テンプレート変数の管理
 
 テンプレート変数（`{{xxx}}`）は以下で一元管理されている：
