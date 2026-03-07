@@ -134,10 +134,10 @@ sales_framework_fields:
 
 ```yaml
 kpi:
-  revenue_categories: []  # 未設定。/{prefix}-admin-kpi-set で設定
+  revenue_categories: []  # 未設定。/{prefix}-admin kpi-set で設定
 ```
 
-※ 売上内訳カテゴリは事業の収益構造に依存するため、デフォルトでは未設定。生成後に `/{prefix}-admin-kpi-set` で設定する（例: 「プロダクト, サービス」「ライセンス, プロサービス」「コンサル, 運用保守」等）。未設定の場合、KPIテーブルは売上合計のみで内訳行なしで動作する。
+※ 売上内訳カテゴリは事業の収益構造に依存するため、デフォルトでは未設定。生成後に `/{prefix}-admin kpi-set` で設定する（例: 「プロダクト, サービス」「ライセンス, プロサービス」「コンサル, 運用保守」等）。未設定の場合、KPIテーブルは売上合計のみで内訳行なしで動作する。
 
 ### デフォルトKPI指標（固定、設定不要）
 
@@ -177,7 +177,7 @@ kpi:
 - Slack参照が必要なコマンド実行時にエラーメッセージを表示:
   ```
   ⚠️ Slackの重点チャンネルが未設定です。
-  `/{product_prefix}-admin-slack` コマンドで設定してください。
+  `/{product_prefix}-admin slack` コマンドで設定してください。
   ```
 - エラー後もコマンドは続行可能（Slack以外のデータソースは通常通り参照）
 
@@ -225,4 +225,7 @@ excluded_commands:
 - knowledge-save, knowledge-search
 - log-daily, log-report
 - admin-index, admin-setup, admin-slack, admin-backlog, admin-stale, admin-migrate, admin-kpi-set, admin-okr-set, admin-competitors, admin-pricing
-- doc-prep, doc-proposal, doc-estimate, doc-hearing, doc-config, doc-testcases
+- doc-prep, doc-proposal, doc-estimate
+- engdoc-hearing, engdoc-config, engdoc-testcases
+
+統合コマンド（admin, doc, engdoc, log）ではファイル単位ではなくセクション単位で除外される。`excluded_commands` の値から `excluded_{name}` フラグ変数を生成し（ハイフンはアンダースコアに変換）、テンプレート内の `{{^excluded_*}}` 条件ブロックで評価する。

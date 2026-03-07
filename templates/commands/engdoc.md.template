@@ -1,0 +1,42 @@
+---
+description: "導入支援文書 — hearing(ヒアリングリスト) / config(設定シート) / testcases(テストケース)"
+argument-hint: "<種別> [企業名 or コンテキストID]"
+---
+
+$ARGUMENTS の最初のトークンを種別として解釈し、対応するガイドラインでドキュメントを生成する。Skillツールで `{{plugin_name}}:{{product_prefix}}-deal` スキルを呼び出し、「ガイドライン参照による業務ドキュメント生成」セクションの手順に従って実行すること。
+
+## ドキュメント種別
+
+| 種別 | 説明 | ガイドラインページ |
+|---|---|---|
+{{^excluded_engdoc_hearing}}
+| hearing | {{product_name}}のヒアリングリスト | `ガイドライン/要件定義用ヒアリングリスト` |
+{{/excluded_engdoc_hearing}}
+{{^excluded_engdoc_config}}
+| config | {{product_name}}の設定シート | `ガイドライン/設定値` |
+{{/excluded_engdoc_config}}
+{{^excluded_engdoc_testcases}}
+| testcases | テストケース | `ガイドライン/テストケース` |
+{{/excluded_engdoc_testcases}}
+
+引数なしの場合は上記一覧を表示して確認する。
+
+## 種別ごとの補足
+
+{{^excluded_engdoc_hearing}}
+### `hearing`
+
+コンテキスト情報から既知の情報を整理し、未確認事項をヒアリング項目として構成する。
+{{/excluded_engdoc_hearing}}
+
+{{^excluded_engdoc_config}}
+### `config`
+
+ヒアリング結果と要件を基に、具体的な設定値・構成を定義した設計書を生成する。
+{{/excluded_engdoc_config}}
+
+{{^excluded_engdoc_testcases}}
+### `testcases`
+
+「$ARGUMENTS」（種別部分を除く）向けのテストケースを生成する。テストケースガイドラインに基づいて生成すること。
+{{/excluded_engdoc_testcases}}

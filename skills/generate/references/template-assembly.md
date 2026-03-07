@@ -186,7 +186,7 @@
 | `{{#official_source_urls}}` | 公式URL一覧 | `{{source_name}}`, `{{source_url}}` |
 | `{{#official_source_search_steps}}` | 公式情報検索手順 | `{{step_index}}`, `{{step_description}}` |
 | `{{#stale_thresholds}}` | 鮮度しきい値定義 | `{{monitoring_type}}`, `{{warn_days}}`, `{{danger_days}}` |
-| `{{#doc_commands}}` | ドキュメント生成コマンド一覧 | `{{command_name}}`, `{{command_description}}` |
+| `{{#doc_commands}}` | ドキュメント生成コマンド一覧 | `{{command_group}}`, `{{command_action}}`, `{{guideline_name}}`, `{{command_description}}` |
 | `{{#customer_classifications}}` | 顧客分類定義 | `{{classification_name}}`, `{{classification_label}}`, `{{classification_description}}`, `{{classification_description_short}}`, `{{classification_example}}`, `{{classification_target}}` |
 | `{{#product_customer_fields}}` | 製品固有の顧客フィールド | `{{field_name}}`, `{{field_label}}`, `{{field_description}}`, `{{field_template}}` |
 | `{{#product_customer_links}}` | 製品固有の顧客リンク | `{{link_label}}`, `{{link_template}}` |
@@ -216,6 +216,24 @@
 | `{{#data_sources.gmail.enabled}}` | Gmail有効 | メールセクション |
 | `{{#data_sources.google_drive.enabled}}` | Google Drive有効 | ドライブセクション |
 | `{{#data_sources.backlog_issues.enabled}}` | Backlog Issues有効 | 課題セクション |
+| `{{^excluded_admin_setup}}` | `excluded_commands` に `admin-setup` が含まれない | admin.md内のsetupセクション |
+| `{{^excluded_admin_index}}` | `excluded_commands` に `admin-index` が含まれない | admin.md内のindexセクション |
+| `{{^excluded_admin_slack}}` | `excluded_commands` に `admin-slack` が含まれない | admin.md内のslackセクション |
+| `{{^excluded_admin_backlog}}` | `excluded_commands` に `admin-backlog` が含まれない | admin.md内のbacklogセクション |
+| `{{^excluded_admin_competitors}}` | `excluded_commands` に `admin-competitors` が含まれない | admin.md内のcompetitorsセクション |
+| `{{^excluded_admin_pricing}}` | `excluded_commands` に `admin-pricing` が含まれない | admin.md内のpricingセクション |
+| `{{^excluded_admin_kpi_set}}` | `excluded_commands` に `admin-kpi-set` が含まれない | admin.md内のkpi-setセクション |
+| `{{^excluded_admin_okr_set}}` | `excluded_commands` に `admin-okr-set` が含まれない | admin.md内のokr-setセクション |
+| `{{^excluded_admin_stale}}` | `excluded_commands` に `admin-stale` が含まれない | admin.md内のstaleセクション |
+| `{{^excluded_admin_migrate}}` | `excluded_commands` に `admin-migrate` が含まれない | admin.md内のmigrateセクション |
+| `{{^excluded_doc_prep}}` | `excluded_commands` に `doc-prep` が含まれない | doc.md内のprepセクション |
+| `{{^excluded_doc_proposal}}` | `excluded_commands` に `doc-proposal` が含まれない | doc.md内のproposalセクション |
+| `{{^excluded_doc_estimate}}` | `excluded_commands` に `doc-estimate` が含まれない | doc.md内のestimateセクション |
+| `{{^excluded_engdoc_hearing}}` | `excluded_commands` に `engdoc-hearing` が含まれない | engdoc.md内のhearingセクション |
+| `{{^excluded_engdoc_config}}` | `excluded_commands` に `engdoc-config` が含まれない | engdoc.md内のconfigセクション |
+| `{{^excluded_engdoc_testcases}}` | `excluded_commands` に `engdoc-testcases` が含まれない | engdoc.md内のtestcasesセクション |
+| `{{^excluded_log_daily}}` | `excluded_commands` に `log-daily` が含まれない | log.md内のdailyセクション |
+| `{{^excluded_log_report}}` | `excluded_commands` に `log-report` が含まれない | log.md内のreportセクション |
 
 ---
 
@@ -294,7 +312,17 @@ elif config.storage.type == "obsidian-vault":
 **重要**: ストレージアダプタを差し込んだ後、アダプタ内の `{{storage_project_key}}` や `{{storage_base_path}}` もStep 2で計算済みの値で置換すること。つまり `{{storage_operations}}` 差し込み後に再度変数置換を実行する。
 
 ### Step 5: コマンド除外の適用
-`config.excluded_commands` に含まれるコマンドは、対応するテンプレートの処理をスキップする。
+`config.excluded_commands` の各エントリから `excluded_*` フラグ変数を生成し、テンプレート内の条件ブロックで評価する。
+
+```python
+for cmd in config.excluded_commands:
+    flag = f"excluded_{cmd.replace('-', '_')}"
+    context[flag] = True
+```
+
+例: `excluded_commands: ["admin-backlog"]` → `excluded_admin_backlog = True` → テンプレート内の `{{^excluded_admin_backlog}}...{{/excluded_admin_backlog}}` ブロックが非表示になる。
+
+統合コマンド（admin, doc, engdoc, log）はファイル単位ではなくセクション単位で除外される。deal, knowledge は従来どおりファイル単位でスキップする。
 
 ### Step 6: 生成物チェック（Post-Generation Validation）
 
@@ -320,6 +348,7 @@ elif config.storage.type == "obsidian-vault":
 | `templates/skills/knowledge/SKILL.md.template` | `skills/{pre}-knowledge/SKILL.md` |
 | `templates/skills/knowledge/references/*.template` | `skills/{pre}-knowledge/references/*` |
 | `templates/commands/{group}/{action}.md.template` | `commands/{pre}-{group}-{action}.md` |
+| `templates/commands/{group}.md.template` | `commands/{pre}-{group}.md` |
 
 ファイル名中の `{pre}` は `config.product_prefix` で置換。
 テンプレートファイルの `.template` 拡張子は出力時に除去。
@@ -372,22 +401,8 @@ commands/
     ├── {pre}-deal-save.md
     ├── {pre}-knowledge-save.md
     ├── {pre}-knowledge-search.md
-    ├── {pre}-log-daily.md
-    ├── {pre}-log-report.md
-    ├── {pre}-admin-index.md
-    ├── {pre}-admin-setup.md
-    ├── {pre}-admin-slack.md
-    ├── {pre}-admin-backlog.md     (backlog_issues有効時のみ)
-    ├── {pre}-admin-stale.md
-    ├── {pre}-admin-migrate.md
-    ├── {pre}-admin-kpi-set.md
-    ├── {pre}-admin-okr-set.md
-    ├── {pre}-admin-competitors.md
-    ├── {pre}-admin-pricing.md
-    ├── {pre}-doc-prep.md
-    ├── {pre}-doc-proposal.md
-    ├── {pre}-doc-estimate.md
-    ├── {pre}-doc-hearing.md
-    ├── {pre}-doc-config.md
-    └── {pre}-doc-testcases.md
+    ├── {pre}-admin.md              (10サブコマンド: setup/index/slack/backlog/competitors/pricing/kpi-set/okr-set/stale/migrate)
+    ├── {pre}-doc.md                (3サブコマンド: prep/proposal/estimate)
+    ├── {pre}-engdoc.md             (3サブコマンド: hearing/config/testcases)
+    └── {pre}-log.md                (2サブコマンド: daily/report)
 ```

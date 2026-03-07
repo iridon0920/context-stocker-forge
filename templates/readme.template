@@ -11,7 +11,7 @@ context-stocker-forge により自動生成されたプラグインです。
 - `{{product_prefix}}-deal` — {{product_name}}案件コンテキストの保存・復元・活動ログ・レポート生成
 - `{{product_prefix}}-knowledge` — {{product_name}}ナレッジの保存・検索
 
-## Commands
+## Commands（8コマンド）
 
 ### 案件・顧客管理（deal）
 - `/{{product_prefix}}-deal-load [顧客名]` — 案件コンテキストの復元
@@ -21,28 +21,20 @@ context-stocker-forge により自動生成されたプラグインです。
 - `/{{product_prefix}}-knowledge-save` — ナレッジの保存
 - `/{{product_prefix}}-knowledge-search [キーワード]` — ナレッジの検索
 
-### ログ・レポート（log）
-- `/{{product_prefix}}-log-daily` — 日次活動ログの記録
-- `/{{product_prefix}}-log-report [月次|QBR]` — 活動レポート生成
+### 活動ログ（log）
+- `/{{product_prefix}}-log <daily|report>` — 日次活動ログの記録 / 活動レポート生成
 
 ### 管理・メンテ（admin）
-- `/{{product_prefix}}-admin-index` — INDEX再構築
-- `/{{product_prefix}}-admin-setup` — セットアップ検証
-- `/{{product_prefix}}-admin-slack` — Slackチャンネル設定
-- `/{{product_prefix}}-admin-backlog` — Backlog監視プロジェクト設定
-- `/{{product_prefix}}-admin-stale` — 鮮度管理（更新停滞検出）
-- `/{{product_prefix}}-admin-migrate` — フォーマットマイグレーション
+- `/{{product_prefix}}-admin <サブコマンド>` — setup / slack / competitors / pricing / kpi-set / okr-set / index / backlog / stale / migrate
 
-### ドキュメント生成（doc）
-- `/{{product_prefix}}-doc-prep [顧客名]` — 商談準備資料
-- `/{{product_prefix}}-doc-proposal [顧客名]` — 提案書ドラフト
-- `/{{product_prefix}}-doc-estimate [顧客名]` — 見積書ドラフト
-- `/{{product_prefix}}-doc-hearing [顧客名]` — ヒアリングリスト
-- `/{{product_prefix}}-doc-config [顧客名]` — 設定値一覧
-- `/{{product_prefix}}-doc-testcases [顧客名]` — テストケース
+### プリセールス文書（doc）
+- `/{{product_prefix}}-doc <種別> [顧客名]` — prep(商談準備) / proposal(提案書) / estimate(見積)
+
+### 導入支援文書（engdoc）
+- `/{{product_prefix}}-engdoc <種別> [顧客名]` — hearing(ヒアリングリスト) / config(設定シート) / testcases(テストケース)
 
 ## セットアップ
 
 1. プラグインをインストール
-2. `/{{product_prefix}}-admin-setup` を実行してストレージの状態を確認
-3. 必要に応じて `/{{product_prefix}}-admin-slack` でSlackチャンネルを設定
+2. `/{{product_prefix}}-admin setup` を実行してストレージの状態を確認
+3. 必要に応じて `/{{product_prefix}}-admin slack` でSlackチャンネルを設定

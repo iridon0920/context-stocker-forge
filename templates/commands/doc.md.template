@@ -1,0 +1,57 @@
+---
+description: "プリセールス文書 — prep(商談準備) / proposal(提案書) / estimate(見積)"
+argument-hint: "<種別> [企業名 or コンテキストID]"
+---
+
+$ARGUMENTS の最初のトークンを種別として解釈し、対応するガイドラインでドキュメントを生成する。Skillツールで `{{plugin_name}}:{{product_prefix}}-deal` スキルを呼び出し、「ガイドライン参照による業務ドキュメント生成」セクションの手順に従って実行すること。
+
+## ドキュメント種別
+
+| 種別 | 説明 | ガイドラインページ |
+|---|---|---|
+{{^excluded_doc_prep}}
+| prep | {{product_name}}の商談準備資料 | `ガイドライン/商談準備` |
+{{/excluded_doc_prep}}
+{{^excluded_doc_proposal}}
+| proposal | {{product_name}}の提案書ドラフト | `ガイドライン/提案書作成` |
+{{/excluded_doc_proposal}}
+{{^excluded_doc_estimate}}
+| estimate | {{product_name}}の概算見積もり | `ガイドライン/見積書作成` |
+{{/excluded_doc_estimate}}
+
+引数なしの場合は上記一覧を表示して確認する。
+
+## 種別ごとの補足
+
+{{^excluded_doc_prep}}
+### `prep`
+
+コンテキスト情報とナレッジベースを統合し、商談に必要な情報をまとめた資料を生成する。
+
+#### 未設定チェック
+
+資料生成前に以下の設定ページを確認する。未設定の項目がある場合、**資料生成は続行**しつつ、該当セクションを「未設定」と明記し、生成完了後に案内する:
+
+- `設定/競合情報` が未設定の場合:
+  ```
+  ⚠️ 競合情報が未設定のため、競合比較セクションを生成できませんでした。
+  → `/{{product_prefix}}-admin competitors` で設定すると、商談準備資料に競合比較が含まれるようになります。
+  ```
+- `設定/料金体系` が未設定の場合:
+  ```
+  ⚠️ 料金体系が未設定のため、概算費用セクションを生成できませんでした。
+  → `/{{product_prefix}}-admin pricing` で設定すると、商談準備資料に概算費用が含まれるようになります。
+  ```
+{{/excluded_doc_prep}}
+
+{{^excluded_doc_proposal}}
+### `proposal`
+
+コンテキスト情報から課題・要件を抽出し、ナレッジベースの技術情報と組み合わせて提案書を生成する。
+{{/excluded_doc_proposal}}
+
+{{^excluded_doc_estimate}}
+### `estimate`
+
+コンテキスト情報の要件と料金体系設定（`設定/料金体系` ページ。フォーマットは `references/pricing-format.md` を参照）を基に概算見積もりを作成する。料金体系設定が未作成の場合は `/{{product_prefix}}-admin pricing` コマンドでの設定を案内する。
+{{/excluded_doc_estimate}}

@@ -102,8 +102,8 @@
    - `README.md`
    - `skills/{pre}-deal/SKILL.md`
    - `skills/{pre}-knowledge/SKILL.md`
-3. `excluded_commands` で除外したコマンドが**生成されていない**か
-4. `backlog_issues.enabled: false` 時に `{pre}-admin-backlog.md` が**生成されていない**か
+3. `excluded_commands` で除外したコマンドのセクションが統合コマンドファイル（`{pre}-admin.md`, `{pre}-doc.md`, `{pre}-engdoc.md`, `{pre}-log.md`）に**含まれていない**か。deal/knowledge系は対応ファイルが**生成されていない**か
+4. `backlog_issues.enabled: false` 時に `{pre}-admin.md` 内のbacklogセクションが**含まれていない**か
 5. referenceファイルが全て存在するか
 
 **判定**:

@@ -14,7 +14,7 @@ argument-hint: "[顧客名（省略時は現在のコンテキスト）]"
 
 ```
 💡 競合情報を設定すると、コンテキスト保存時に競合状況が自動で記録されます。
-→ `/{{product_prefix}}-admin-competitors` で設定してください。
+→ `/{{product_prefix}}-admin competitors` で設定してください。
 ```
 
 ※ 競合情報が設定済みの場合はこの案内を表示しない。

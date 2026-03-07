@@ -113,17 +113,17 @@
 
 | 項目 | 更新タイミング | 更新方法 |
 |------|-------------|---------|
-| 売上合計・内訳 | 月末締め後 | `/{{product_prefix}}-admin-kpi-set actual` または手動編集 |
-| 粗利率（カテゴリ別） | 月末締め後 | `/{{product_prefix}}-admin-kpi-set actual` または手動編集 |
-| 新規商談数 | 月末締め後 | `/{{product_prefix}}-admin-kpi-set actual` または手動編集 |
-| 成約数・失注数 | 月末締め後 | `/{{product_prefix}}-admin-kpi-set actual` または手動編集 |
+| 売上合計・内訳 | 月末締め後 | `/{{product_prefix}}-admin kpi-set actual` または手動編集 |
+| 粗利率（カテゴリ別） | 月末締め後 | `/{{product_prefix}}-admin kpi-set actual` または手動編集 |
+| 新規商談数 | 月末締め後 | `/{{product_prefix}}-admin kpi-set actual` または手動編集 |
+| 成約数・失注数 | 月末締め後 | `/{{product_prefix}}-admin kpi-set actual` または手動編集 |
 | 成約率 | 自動計算 | 成約数・失注数から自動算出 |
 
 ※ すべてのKPI実績値は手動入力とする（成約率のみ自動計算）。コンテキストページの情報は入力時の参考として利用できるが、レポート生成時に自動集計は行わない。
 
 ### 目標値の設定
 
-- 期初に `/{{product_prefix}}-admin-kpi-set target` で年間目標と月次配分を設定
+- 期初に `/{{product_prefix}}-admin kpi-set target` で年間目標と月次配分を設定
 - 期中の目標修正は修正履歴セクションに変更理由を記録
 
 ---

@@ -20,4 +20,4 @@ v{from}_to_v{to}.md
 
 ## 使用タイミング
 
-`/{{product_prefix}}-admin-migrate` コマンド実行時、SKILL.md のマイグレーションモード手順 (Step 7) で参照される。
+`/{{product_prefix}}-admin migrate` コマンド実行時、SKILL.md のマイグレーションモード手順 (Step 7) で参照される。

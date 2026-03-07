@@ -1,0 +1,80 @@
+---
+description: "活動ログ — daily(日次ログ) / report(月次・QBRレポート)"
+argument-hint: "<daily|report> [引数...]"
+---
+
+$ARGUMENTS の最初のトークンをサブコマンドとして解釈し、対応する処理を実行する。
+
+## サブコマンド一覧
+
+| サブコマンド | 説明 | 追加引数 |
+|---|---|---|
+{{^excluded_log_daily}}
+| daily | 日次活動ログを記録 | なし |
+{{/excluded_log_daily}}
+{{^excluded_log_report}}
+| report | 活動レポートを生成（月次/QBR） | [monthly\|qbr] [YYYY-MM\|YYYY-Q#] [--format md\|pptx\|both] |
+{{/excluded_log_report}}
+
+引数なしの場合は上記一覧を表示して、実行したいサブコマンドを確認する。
+
+---
+
+{{^excluded_log_daily}}
+### `daily`
+
+{{product_name}}案件の日次活動ログを作成する。Skillツールで `{{plugin_name}}:{{product_prefix}}-deal` スキルを呼び出し、「日次活動ログ」セクションの手順に従って実行すること。
+
+全データソース（カレンダー、Slack、メール、Backlog課題等）から本日の活動を自動収集し、活動ログとして保存する。
+
+#### 未設定チェック
+
+Slack情報の収集前に `設定/Slackチャンネル` ページを確認する。**ページが存在しない、または重点チャンネルが0件の場合**:
+- Slackデータ収集フェーズをスキップし、以下を表示する:
+  ```
+  ⚠️ Slackチャンネルが未設定のため、Slack情報の収集をスキップしました。
+  → `/{{product_prefix}}-admin slack` で重点チャンネルを設定すると、Slackの会話履歴もログに含まれるようになります。
+  ```
+- Slack以外のデータソース（カレンダー、メール等）は通常通り収集を続行する。
+{{/excluded_log_daily}}
+
+{{^excluded_log_report}}
+### `report`
+
+{{product_name}}案件の活動レポートを生成する。Skillツールで `{{plugin_name}}:{{product_prefix}}-deal` スキルを呼び出し、「活動レポート生成」セクションの手順に従って実行すること。
+
+追加引数の解釈:
+- `monthly`: 月次レポート（デフォルト: 先月分）
+- `monthly 2026-02`: 指定月のレポート
+- `qbr`: QBRレポート（デフォルト: 前四半期分）
+- `qbr 2026-Q1`: 指定四半期のレポート
+- `--format md`: Markdown出力（ストレージ保存。デフォルト）
+- `--format pptx`: PowerPoint出力
+- `--format both`: Markdown + PowerPoint両方出力
+
+引数が `$ARGUMENTS` として渡される（`report` 部分を除く）。
+
+データソース:
+- KPI管理ページ（`管理/KPI/YYYY`）— 売上目標・実績・達成率
+- OKR管理ページ（`管理/OKR/YYYY`）— OKR進捗・月次アクション
+- 日次活動ログ（`活動ログ/YYYY-MM/` 配下のページ）
+- 顧客・案件コンテキストページ（ステータス、売上規模、セールスフレームワーク情報）
+- INDEXページ群（エントリ数・更新状況）
+
+pptx出力時はpptxスキルのSKILL.mdに従ってpython-pptxで生成する。
+
+#### 未設定チェック
+
+レポート生成前に以下の管理ページを確認する。未設定の項目がある場合、**レポート生成は続行**しつつ、該当セクションを「データなし」と表示し、生成完了後にまとめて案内する:
+
+- `管理/KPI/YYYY` が未設定の場合:
+  ```
+  ⚠️ KPI目標が未設定のため、売上目標・達成率セクションのデータがありません。
+  → `/{{product_prefix}}-admin kpi-set target` で年間目標を設定してください。
+  ```
+- `管理/OKR/YYYY` が未設定の場合:
+  ```
+  ⚠️ OKRが未設定のため、OKR進捗セクションのデータがありません。
+  → `/{{product_prefix}}-admin okr-set set` でOKRを設定してください。
+  ```
+{{/excluded_log_report}}

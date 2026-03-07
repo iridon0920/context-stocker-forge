@@ -11,8 +11,8 @@ argument-hint: "[顧客名 例: ABC株式会社, XYZテック]"
 
 ```
 💡 以下を設定すると、より充実したコンテキストを復元できます:
-- Slackチャンネル → `/{{product_prefix}}-admin-slack`（Slack会話履歴の参照）
-- 競合情報 → `/{{product_prefix}}-admin-competitors`（競合比較の自動表示）
+- Slackチャンネル → `/{{product_prefix}}-admin slack`（Slack会話履歴の参照）
+- 競合情報 → `/{{product_prefix}}-admin competitors`（競合比較の自動表示）
 ```
 
 ※ 設定済みの項目は案内に含めない。全て設定済みの場合はこの案内を表示しない。

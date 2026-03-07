@@ -69,7 +69,7 @@
 
 ### OKR設定（期初）
 
-- `/{{product_prefix}}-okr-set` コマンドでObjective・KRを設定
+- `/{{product_prefix}}-admin okr-set` コマンドでObjective・KRを設定
 - Objectiveは定性的、KRは定量的（測定可能）に記述
 - OKRの数は2-5個を推奨
 

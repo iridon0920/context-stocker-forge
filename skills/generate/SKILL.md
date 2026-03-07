@@ -52,7 +52,7 @@ ${CLAUDE_PLUGIN_ROOT}
 ### 確認: デフォルト設定の説明
 - デフォルト値一覧を表示し、生成実行の確認を取る
 - デフォルト値の詳細は `references/wizard-steps.md` 参照
-- 生成後、`/{pre}-admin-setup` で未設定項目の確認・設定が可能であることを案内
+- 生成後、`/{pre}-admin setup` で未設定項目の確認・設定が可能であることを案内
 
 ---
 
@@ -94,13 +94,14 @@ ${CLAUDE_PLUGIN_ROOT}
    d. `templates/skills/context/references/*.template` → `skills/{pre}-deal/references/*`
    e. `templates/skills/knowledge/SKILL.md.template` + ストレージアダプタ → `skills/{pre}-knowledge/SKILL.md`
    f. `templates/skills/knowledge/references/*.template` → `skills/{pre}-knowledge/references/*`
-   g. `templates/commands/**/*.template` → `commands/{pre}-{group}-{action}.md`
+   g. `templates/commands/{group}/{action}.md.template` → `commands/{pre}-{group}-{action}.md`
+   h. `templates/commands/{group}.md.template` → `commands/{pre}-{group}.md`
 
 展開順序: `{{storage_operations}}` 差込 → ループ展開 → 条件評価 → 単純置換
 **重要**: ストレージアダプタ差込後、アダプタ内の `{{storage_project_key}}` 等も置換すること。
 
 **Step 5: コマンド除外の適用**
-`excluded_commands` に含まれるコマンドをスキップする。
+`excluded_commands` の各エントリから `excluded_{name}` フラグ変数を生成し（ハイフン→アンダースコア変換）、テンプレート内の `{{^excluded_*}}` 条件ブロックで評価する。統合コマンド（admin, doc, engdoc, log）はセクション単位で除外され、deal/knowledgeはファイル単位でスキップする。
 
 **Step 6: 生成物チェック（必須）**
 `references/post-generation-check.md` の6項目を全て検証する。
@@ -167,5 +168,5 @@ zip -r {plugin_name}.plugin {plugin_name}/
 
 プラグイン生成完了時に以下を案内:
 1. `.plugin` ファイルのインストール方法
-2. 初回セットアップコマンド（`/{pre}-admin-setup`）の実行を推奨
+2. 初回セットアップコマンド（`/{pre}-admin setup`）の実行を推奨
 3. 設定ファイル（`.team-config.yml`）はプラグイン内に同梱済みであること（再生成時に自動で読み込まれる）
