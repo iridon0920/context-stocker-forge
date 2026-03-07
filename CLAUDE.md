@@ -14,7 +14,7 @@ context-stocker-forge/
 ├── storage-adapters/        # ストレージアダプタ定義（backlog-wiki, obsidian-vault）
 ├── templates/               # 生成プラグインのテンプレート群
 │   ├── commands/            # コマンドテンプレート（admin/deal/doc/knowledge/log）
-│   ├── skills/              # スキルテンプレート（context→deal, knowledge）
+│   ├── skills/              # スキルテンプレート（deal, knowledge）
 │   ├── plugin-json.template
 │   └── readme.template
 ├── CLAUDE.md                # ← このファイル
@@ -62,8 +62,8 @@ context-stocker-forge/
 |--------|--------|----------|
 | `skills/generate/references/wizard-steps.md` | `skills/generate/SKILL.md` | ウィザードのステップ数・構成 |
 | `templates/commands/**/*.template` | `README.md` | コマンド一覧・コマンド数 |
-| `templates/commands/**/*.template` の参照セクション名 | `templates/skills/context/SKILL.md.template` | セクション名の一致 |
-| `templates/skills/context/SKILL.md.template` の判断フロー | `templates/commands/**/*.template` | コマンド名の存在 |
+| `templates/commands/**/*.template` の参照セクション名 | `templates/skills/deal/SKILL.md.template` | セクション名の一致 |
+| `templates/skills/deal/SKILL.md.template` の判断フロー | `templates/commands/**/*.template` | コマンド名の存在 |
 
 #### 検証の原則
 

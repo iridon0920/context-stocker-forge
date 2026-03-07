@@ -345,8 +345,8 @@ for cmd in config.excluded_commands:
 | （ウィザード生成） | `.team-config.yml` |
 | `templates/plugin-json.template` | `.claude-plugin/plugin.json` |
 | `templates/readme.template` | `README.md` |
-| `templates/skills/context/SKILL.md.template` | `skills/{pre}-deal/SKILL.md` |
-| `templates/skills/context/references/*.template` | `skills/{pre}-deal/references/*` |
+| `templates/skills/deal/SKILL.md.template` | `skills/{pre}-deal/SKILL.md` |
+| `templates/skills/deal/references/*.template` | `skills/{pre}-deal/references/*` |
 | `templates/skills/knowledge/SKILL.md.template` | `skills/{pre}-knowledge/SKILL.md` |
 | `templates/skills/knowledge/references/*.template` | `skills/{pre}-knowledge/references/*` |
 | `templates/commands/{group}/{action}.md.template` | `commands/{pre}-{group}-{action}.md` |

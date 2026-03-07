@@ -90,8 +90,8 @@ ${CLAUDE_PLUGIN_ROOT}
 各テンプレートファイルを読み込み、変数を展開する:
    a. `templates/plugin-json.template` → `.claude-plugin/plugin.json`
    b. `templates/readme.template` → `README.md`
-   c. `templates/skills/context/SKILL.md.template` + ストレージアダプタ → `skills/{pre}-deal/SKILL.md`
-   d. `templates/skills/context/references/*.template` → `skills/{pre}-deal/references/*`
+   c. `templates/skills/deal/SKILL.md.template` + ストレージアダプタ → `skills/{pre}-deal/SKILL.md`
+   d. `templates/skills/deal/references/*.template` → `skills/{pre}-deal/references/*`
    e. `templates/skills/knowledge/SKILL.md.template` + ストレージアダプタ → `skills/{pre}-knowledge/SKILL.md`
    f. `templates/skills/knowledge/references/*.template` → `skills/{pre}-knowledge/references/*`
    g. `templates/commands/{group}/{action}.md.template` → `commands/{pre}-{group}-{action}.md`

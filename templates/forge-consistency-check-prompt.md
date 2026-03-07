@@ -40,7 +40,7 @@ context-stocker-forge/
     ├── plugin-json.template
     ├── readme.template
     ├── skills/
-    │   ├── context/                    # → 生成時 skills/{pre}-deal/ になる
+    │   ├── deal/                       # → 生成時 skills/{pre}-deal/ になる
     │   │   ├── SKILL.md.template       # dealスキル本体テンプレート（~1010行）
     │   │   └── references/
     │   │       ├── context-format.md.template
@@ -62,7 +62,7 @@ context-stocker-forge/
         ├── admin.md.template          # 統合コマンド（11サブコマンド: setup/index/slack/backlog/competitors/pricing/members/kpi-set/okr-set/stale/migrate）
         ├── doc.md.template            # 統合コマンド（3サブコマンド: prep/proposal/estimate）
         ├── engdoc.md.template         # 統合コマンド（3サブコマンド: hearing/config/testcases）
-        ├── log.md.template            # 統合コマンド（2サブコマンド: daily/report）
+        ├── log.md.template            # 統合コマンド（3サブコマンド: daily/weekly/report）
         ├── deal/   (2コマンド: load, save)
         └── knowledge/ (2コマンド: save, search)
 ```

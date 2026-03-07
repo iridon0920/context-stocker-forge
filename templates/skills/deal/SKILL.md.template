@@ -513,15 +513,15 @@ INDEXには{{#customer_classifications}}「{{classification_name}}」{{/customer
 
 ## 活動レポート生成
 
-`/{{product_prefix}}-report` コマンドで呼び出される。INDEXとストレージのデータを集約してレポートを生成する。
+`/{{product_prefix}}-log report` コマンドで呼び出される。INDEXとストレージのデータを集約してレポートを生成する。
 
 ### 引数
 
 | 引数 | 説明 | 例 |
 |------|------|----|
-| `monthly [YYYY-MM]` | 月次報告用レポート | `/{{product_prefix}}-report monthly 2026-02` |
-| `qbr [YYYY-Q#]` | QBR用レポート | `/{{product_prefix}}-report qbr 2026-Q3` |
-| `annual [YYYY]` | 年次レポート | `/{{product_prefix}}-report annual 2025` |
+| `monthly [YYYY-MM]` | 月次報告用レポート | `/{{product_prefix}}-log report monthly 2026-02` |
+| `qbr [YYYY-Q#]` | QBR用レポート | `/{{product_prefix}}-log report qbr 2026-Q3` |
+| `annual [YYYY]` | 年次レポート | `/{{product_prefix}}-log report annual 2025` |
 | `--format md` | Markdown出力（ストレージ保存用。デフォルト） | |
 | `--format pptx` | PowerPoint出力 | |
 | `--format both` | Markdown + PowerPoint両方出力 | |
@@ -1051,7 +1051,7 @@ Phase 2の結果を使って以下を実行：
 
 ## セットアップ確認
 
-`/{{product_prefix}}-setup` コマンドで呼び出される。プロジェクト設定を確認・表示する。
+`/{{product_prefix}}-admin setup` コマンドで呼び出される。プロジェクト設定を確認・表示する。
 
 {{storage_setup_procedure}}
 
