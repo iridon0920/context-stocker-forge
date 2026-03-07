@@ -61,6 +61,9 @@
 |-----------------|-----------|-----|
 | `{{plugin_name}}` | `"{product_name.lower()}-context-stocker"` ※configにもあるが上書き | `zendesk-context-stocker` |
 | `{{skill_deal_name}}` | `"{product_prefix}-deal"` | `zd-deal` |
+| `{{skill_admin_name}}` | `"{product_prefix}-admin"` | `zd-admin` |
+| `{{skill_log_name}}` | `"{product_prefix}-log"` | `zd-log` |
+| `{{skill_doc_name}}` | `"{product_prefix}-doc"` | `zd-doc` |
 | `{{skill_knowledge_name}}` | `"{product_prefix}-knowledge"` | `zd-knowledge` |
 | `{{skill_reference}}` | `"{plugin_name}:{product_prefix}-deal"` | `zendesk-context-stocker:zd-deal` |
 | `{{knowledge_skill_reference}}` | `"{plugin_name}:{product_prefix}-knowledge"` | `zendesk-context-stocker:zd-knowledge` |
@@ -234,6 +237,7 @@
 | `{{^excluded_engdoc_config}}` | `excluded_commands` に `engdoc-config` が含まれない | engdoc.md内のconfigセクション |
 | `{{^excluded_engdoc_testcases}}` | `excluded_commands` に `engdoc-testcases` が含まれない | engdoc.md内のtestcasesセクション |
 | `{{^excluded_log_daily}}` | `excluded_commands` に `log-daily` が含まれない | log.md内のdailyセクション |
+| `{{^excluded_log_weekly}}` | `excluded_commands` に `log-weekly` が含まれない | log.md内のweeklyセクション |
 | `{{^excluded_log_report}}` | `excluded_commands` に `log-report` が含まれない | log.md内のreportセクション |
 
 ---
@@ -256,6 +260,9 @@ context.update(config)  # config直接値を全て格納
 # 基本派生値
 context["plugin_name"] = f"{config.product_name.lower()}-context-stocker"
 context["skill_deal_name"] = f"{config.product_prefix}-deal"
+context["skill_admin_name"] = f"{config.product_prefix}-admin"
+context["skill_log_name"] = f"{config.product_prefix}-log"
+context["skill_doc_name"] = f"{config.product_prefix}-doc"
 context["skill_knowledge_name"] = f"{config.product_prefix}-knowledge"
 context["skill_reference"] = f"{context.plugin_name}:{config.product_prefix}-deal"
 context["knowledge_skill_reference"] = f"{context.plugin_name}:{config.product_prefix}-knowledge"
@@ -344,8 +351,13 @@ for cmd in config.excluded_commands:
 | （ウィザード生成） | `.team-config.yml` |
 | `templates/plugin-json.template` | `.claude-plugin/plugin.json` |
 | `templates/readme.template` | `README.md` |
-| `templates/skills/context/SKILL.md.template` | `skills/{pre}-deal/SKILL.md` |
-| `templates/skills/context/references/*.template` | `skills/{pre}-deal/references/*` |
+| `templates/skills/deal/SKILL.md.template` | `skills/{pre}-deal/SKILL.md` |
+| `templates/skills/deal/references/*.template` | `skills/{pre}-deal/references/*` |
+| `templates/skills/admin/SKILL.md.template` | `skills/{pre}-admin/SKILL.md` |
+| `templates/skills/admin/references/*.template` | `skills/{pre}-admin/references/*` |
+| `templates/skills/log/SKILL.md.template` | `skills/{pre}-log/SKILL.md` |
+| `templates/skills/log/references/*.template` | `skills/{pre}-log/references/*` |
+| `templates/skills/doc/SKILL.md.template` | `skills/{pre}-doc/SKILL.md` |
 | `templates/skills/knowledge/SKILL.md.template` | `skills/{pre}-knowledge/SKILL.md` |
 | `templates/skills/knowledge/references/*.template` | `skills/{pre}-knowledge/references/*` |
 | `templates/commands/{group}/{action}.md.template` | `commands/{pre}-{group}-{action}.md` |
@@ -384,16 +396,26 @@ commands/
 │   │   ├── SKILL.md
 │   │   └── references/
 │   │       ├── context-format.md
-│   │       ├── daily-log-format.md
 │   │       ├── index-format.md
-│   │       ├── similarity-check.md
+│   │       └── similarity-check.md
+│   ├── {pre}-admin/
+│   │   ├── SKILL.md
+│   │   └── references/
 │   │       ├── slack-channels-format.md
 │   │       ├── backlog-projects-format.md  (backlog-wiki時のみ)
-│   │       ├── kpi-format.md
-│   │       ├── okr-format.md
 │   │       ├── competitors-format.md
 │   │       ├── pricing-format.md
-│   │       └── team-members-format.md
+│   │       ├── team-members-format.md
+│   │       ├── kpi-format.md
+│   │       ├── okr-format.md
+│   │       └── index-format.md
+│   ├── {pre}-log/
+│   │   ├── SKILL.md
+│   │   └── references/
+│   │       ├── daily-log-format.md
+│   │       └── weekly-report-format.md
+│   ├── {pre}-doc/
+│   │   └── SKILL.md
 │   └── {pre}-knowledge/
 │       ├── SKILL.md
 │       └── references/
@@ -406,5 +428,5 @@ commands/
     ├── {pre}-admin.md              (11サブコマンド: setup/index/slack/backlog/competitors/pricing/members/kpi-set/okr-set/stale/migrate)
     ├── {pre}-doc.md                (3サブコマンド: prep/proposal/estimate)
     ├── {pre}-engdoc.md             (3サブコマンド: hearing/config/testcases)
-    └── {pre}-log.md                (2サブコマンド: daily/report)
+    └── {pre}-log.md                (3サブコマンド: daily/weekly/report)
 ```

@@ -31,6 +31,11 @@ Homeは各INDEXへのリンク集、個別INDEXが実際のエントリ一覧を
 活動ログ/
   YYYY-MM/
     YYYY-MM-DD              ← 日次活動ログ
+    週次レポート-W{NN}       ← 週次レポート（ISO週番号）
+    月次レポート              ← 月次レポート
+  YYYY/
+    QBR-Q{N}                ← QBRレポート
+    年次レポート              ← 年次レポート
 INDEX/
 {{#index_pages}}
   {{index_page_name}}               ← {{index_page_description}}
@@ -62,6 +67,10 @@ INDEX/
 {{/has_subcategories}}
 {{/knowledge_categories}}
 | 日次活動ログ | `活動ログ/YYYY-MM/YYYY-MM-DD` | `活動ログ/2026-03/2026-03-02` |
+| 週次レポート | `活動ログ/YYYY-MM/週次レポート-W{NN}` | `活動ログ/2026-03/週次レポート-W10` |
+| 月次レポート | `活動ログ/YYYY-MM/月次レポート` | `活動ログ/2026-03/月次レポート` |
+| QBRレポート | `活動ログ/YYYY/QBR-Q{N}` | `活動ログ/2026/QBR-Q1` |
+| 年次レポート | `活動ログ/YYYY/年次レポート` | `活動ログ/2025/年次レポート` |
 | INDEXページ | `INDEX/{カテゴリ名}` | `INDEX/顧客・案件` |
 | KPI管理 | `管理/KPI/YYYY` | `管理/KPI/2026` |
 | OKR管理 | `管理/OKR/YYYY` | `管理/OKR/2026` |
