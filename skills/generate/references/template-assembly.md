@@ -234,6 +234,7 @@
 | `{{^excluded_engdoc_config}}` | `excluded_commands` に `engdoc-config` が含まれない | engdoc.md内のconfigセクション |
 | `{{^excluded_engdoc_testcases}}` | `excluded_commands` に `engdoc-testcases` が含まれない | engdoc.md内のtestcasesセクション |
 | `{{^excluded_log_daily}}` | `excluded_commands` に `log-daily` が含まれない | log.md内のdailyセクション |
+| `{{^excluded_log_weekly}}` | `excluded_commands` に `log-weekly` が含まれない | log.md内のweeklyセクション |
 | `{{^excluded_log_report}}` | `excluded_commands` に `log-report` が含まれない | log.md内のreportセクション |
 
 ---
@@ -385,6 +386,7 @@ commands/
 │   │   └── references/
 │   │       ├── context-format.md
 │   │       ├── daily-log-format.md
+│   │       ├── weekly-report-format.md
 │   │       ├── index-format.md
 │   │       ├── similarity-check.md
 │   │       ├── slack-channels-format.md
@@ -406,5 +408,5 @@ commands/
     ├── {pre}-admin.md              (11サブコマンド: setup/index/slack/backlog/competitors/pricing/members/kpi-set/okr-set/stale/migrate)
     ├── {pre}-doc.md                (3サブコマンド: prep/proposal/estimate)
     ├── {pre}-engdoc.md             (3サブコマンド: hearing/config/testcases)
-    └── {pre}-log.md                (2サブコマンド: daily/report)
+    └── {pre}-log.md                (3サブコマンド: daily/weekly/report)
 ```
