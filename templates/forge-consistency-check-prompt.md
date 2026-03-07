@@ -50,13 +50,16 @@ context-stocker-forge/
     │   │       ├── okr-format.md.template
     │   │       ├── similarity-check.md.template
     │   │       ├── slack-channels-format.md.template
-    │   │       └── backlog-projects-format.md.template
+    │   │       ├── backlog-projects-format.md.template
+    │   │       ├── competitors-format.md.template
+    │   │       ├── pricing-format.md.template
+    │   │       └── team-members-format.md.template
     │   └── knowledge/                  # → 生成時 skills/{pre}-knowledge/ になる
     │       ├── SKILL.md.template
     │       └── references/
     │           └── knowledge-format.md.template
     └── commands/                       # → 生成時 commands/{pre}-{group}.md or commands/{pre}-{group}-{action}.md になる
-        ├── admin.md.template          # 統合コマンド（10サブコマンド: setup/index/slack/backlog/competitors/pricing/kpi-set/okr-set/stale/migrate）
+        ├── admin.md.template          # 統合コマンド（11サブコマンド: setup/index/slack/backlog/competitors/pricing/members/kpi-set/okr-set/stale/migrate）
         ├── doc.md.template            # 統合コマンド（3サブコマンド: prep/proposal/estimate）
         ├── engdoc.md.template         # 統合コマンド（3サブコマンド: hearing/config/testcases）
         ├── log.md.template            # 統合コマンド（2サブコマンド: daily/report）
@@ -80,6 +83,7 @@ context-stocker-forge/
 | admin.md（okr-setサブコマンド） | deal | 参照ファイル okr-format.md |
 | admin.md（setupサブコマンド） | deal | セットアップ検証 |
 | admin.md（slackサブコマンド） | deal | Slackチャンネル設定管理 |
+| admin.md（membersサブコマンド） | deal | チームメンバー設定管理 |
 | admin.md（staleサブコマンド） | deal | 鮮度管理 |
 | deal/load.md | deal | コンテキスト復元 |
 | deal/save.md | deal | コンテキスト保存 |

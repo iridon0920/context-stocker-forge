@@ -224,7 +224,7 @@ excluded_commands:
 - deal-load, deal-save
 - knowledge-save, knowledge-search
 - log-daily, log-report
-- admin-index, admin-setup, admin-slack, admin-backlog, admin-stale, admin-migrate, admin-kpi-set, admin-okr-set, admin-competitors, admin-pricing
+- admin-index, admin-setup, admin-slack, admin-backlog, admin-stale, admin-migrate, admin-kpi-set, admin-okr-set, admin-competitors, admin-pricing, admin-members
 - doc-prep, doc-proposal, doc-estimate
 - engdoc-hearing, engdoc-config, engdoc-testcases
 

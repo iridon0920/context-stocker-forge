@@ -25,7 +25,7 @@ context-stocker-forge により自動生成されたプラグインです。
 - `/{{product_prefix}}-log <daily|report>` — 日次活動ログの記録 / 活動レポート生成
 
 ### 管理・メンテ（admin）
-- `/{{product_prefix}}-admin <サブコマンド>` — setup / slack / competitors / pricing / kpi-set / okr-set / index / backlog / stale / migrate
+- `/{{product_prefix}}-admin <サブコマンド>` — setup / slack / competitors / pricing / members / kpi-set / okr-set / index / backlog / stale / migrate
 
 ### プリセールス文書（doc）
 - `/{{product_prefix}}-doc <種別> [顧客名]` — prep(商談準備) / proposal(提案書) / estimate(見積)

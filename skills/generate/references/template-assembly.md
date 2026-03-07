@@ -116,7 +116,7 @@
 | `{{storage_rename_cmd}}` | `update_wiki(name: ...)` |
 | `{{storage_list_all_pages_cmd}}` | `get_wiki_pages(projectId: ...)` |
 | `{{storage_get_updated_date_cmd}}` | `get_wiki` のレスポンスの `updated` フィールド |
-| `{{storage_session_init}}` | **Phase 1**（直列・必須）: `get_project(projectKey: "{{project_key}}")` でprojectId取得。**Phase 2**（すべて並列）: `get_wiki_pages` でHome・各設定ページ（Slackチャンネル設定、Backlogプロジェクト設定、競合情報、料金体系）のwikiIdを一括取得。**Phase 3**（並列）: Phase 2のwikiIdで `get_wiki` し本文取得・パース・キャッシュ。効果: 旧方式（全直列6〜8ターン）→ 3フェーズに短縮 |
+| `{{storage_session_init}}` | **Phase 1**（直列・必須）: `get_project(projectKey: "{{project_key}}")` でprojectId取得。**Phase 2**（すべて並列）: `get_wiki_pages` でHome・各設定ページ（Slackチャンネル設定、Backlogプロジェクト設定、競合情報、料金体系、チームメンバー）のwikiIdを一括取得。**Phase 3**（並列）: Phase 2のwikiIdで `get_wiki` し本文取得・パース・キャッシュ。効果: 旧方式（全直列6〜8ターン）→ 3フェーズに短縮 |
 | `{{storage_setup_procedure}}` | `get_project` と `get_wiki_pages` で接続・存在確認する手順 |
 | `{{storage_save_context_procedure}}` | `get_wiki_pages` で既存チェック → `add_wiki` or `update_wiki` の手順 |
 | `{{storage_save_knowledge_procedure}}` | 同上（パスがナレッジ配下） |
@@ -148,7 +148,7 @@
 | `{{storage_rename_cmd}}` | `move_note` |
 | `{{storage_list_all_pages_cmd}}` | `list_directory(path: "{{storage_base_path}}")` |
 | `{{storage_get_updated_date_cmd}}` | `get_frontmatter` のレスポンスの `updated` フィールド |
-| `{{storage_session_init}}` | **Phase 1**（直列・必須）: `list_directory(path: "{{storage_base_path}}")` でVault構成を確認。**Phase 2**（並列）: `read_note` でHome・各設定ノート（Slackチャンネル設定、Backlogプロジェクト設定、競合情報、料金体系）・INDEXを一括読み込み・パース・キャッシュ。効果: 旧方式（直列N回）→ 2フェーズに短縮 |
+| `{{storage_session_init}}` | **Phase 1**（直列・必須）: `list_directory(path: "{{storage_base_path}}")` でVault構成を確認。**Phase 2**（並列）: `read_note` でHome・各設定ノート（Slackチャンネル設定、Backlogプロジェクト設定、競合情報、料金体系、チームメンバー）・INDEXを一括読み込み・パース・キャッシュ。効果: 旧方式（直列N回）→ 2フェーズに短縮 |
 | `{{storage_setup_procedure}}` | `list_directory` でbase_path存在確認する手順 |
 | `{{storage_save_context_procedure}}` | `read_note` で既存チェック → `write_note` の手順 |
 | `{{storage_save_knowledge_procedure}}` | 同上（パスがナレッジ配下） |
@@ -222,6 +222,7 @@
 | `{{^excluded_admin_backlog}}` | `excluded_commands` に `admin-backlog` が含まれない | admin.md内のbacklogセクション |
 | `{{^excluded_admin_competitors}}` | `excluded_commands` に `admin-competitors` が含まれない | admin.md内のcompetitorsセクション |
 | `{{^excluded_admin_pricing}}` | `excluded_commands` に `admin-pricing` が含まれない | admin.md内のpricingセクション |
+| `{{^excluded_admin_members}}` | `excluded_commands` に `admin-members` が含まれない | admin.md内のmembersセクション + SKILL.md内のチームメンバー関連セクション + daily-log-format.md内のメンバー別サマリー |
 | `{{^excluded_admin_kpi_set}}` | `excluded_commands` に `admin-kpi-set` が含まれない | admin.md内のkpi-setセクション |
 | `{{^excluded_admin_okr_set}}` | `excluded_commands` に `admin-okr-set` が含まれない | admin.md内のokr-setセクション |
 | `{{^excluded_admin_stale}}` | `excluded_commands` に `admin-stale` が含まれない | admin.md内のstaleセクション |
@@ -391,7 +392,8 @@ commands/
 │   │       ├── kpi-format.md
 │   │       ├── okr-format.md
 │   │       ├── competitors-format.md
-│   │       └── pricing-format.md
+│   │       ├── pricing-format.md
+│   │       └── team-members-format.md
 │   └── {pre}-knowledge/
 │       ├── SKILL.md
 │       └── references/
@@ -401,7 +403,7 @@ commands/
     ├── {pre}-deal-save.md
     ├── {pre}-knowledge-save.md
     ├── {pre}-knowledge-search.md
-    ├── {pre}-admin.md              (10サブコマンド: setup/index/slack/backlog/competitors/pricing/kpi-set/okr-set/stale/migrate)
+    ├── {pre}-admin.md              (11サブコマンド: setup/index/slack/backlog/competitors/pricing/members/kpi-set/okr-set/stale/migrate)
     ├── {pre}-doc.md                (3サブコマンド: prep/proposal/estimate)
     ├── {pre}-engdoc.md             (3サブコマンド: hearing/config/testcases)
     └── {pre}-log.md                (2サブコマンド: daily/report)
