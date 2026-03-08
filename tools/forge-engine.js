@@ -886,7 +886,7 @@ function main() {
     console.log(`Usage: node forge-engine.js <config-path> [options]
 
 Options:
-  --output-dir <dir>     出力先ディレクトリ
+  --output-dir <dir>     出力先ディレクトリ（この下に {plugin_name}/ を作成。デフォルト: カレントディレクトリ）
   --zip                  .plugin (ZIP) ファイルを生成
   --templates-dir <dir>  テンプレートディレクトリ
   --validate-only        バリデーションのみ実行
@@ -935,9 +935,10 @@ Options:
   // コンテキスト構築
   const context = buildContext(config, forgeRoot);
 
-  if (!outputDir) {
-    outputDir = path.resolve(context.plugin_name);
-  }
+  // 出力先ディレクトリの決定
+  // --output-dir は親ディレクトリ。その下に {plugin_name}/ を作成する。
+  const baseDir = outputDir || path.resolve('.');
+  outputDir = path.join(baseDir, context.plugin_name);
 
   if (validateOnly) {
     if (!fs.existsSync(outputDir)) {

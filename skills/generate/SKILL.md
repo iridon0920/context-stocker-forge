@@ -48,6 +48,7 @@ ${CLAUDE_PLUGIN_ROOT}
 - 営業フレームワークフィールド（カスタム時のみ: key, name, description の配列）
 - データソース（有効にするデータソースのリスト）
 - ナレッジカテゴリ（カテゴリ名・説明・サブカテゴリの配列）
+- 出力先（.pluginファイルの出力ディレクトリパス）
 
 ### バリデーション
 
@@ -82,8 +83,10 @@ ${CLAUDE_PLUGIN_ROOT}
 テンプレート合成は `tools/forge-engine.js`（Node.js）で実行する。AIによるテンプレート処理は不要。
 
 ```
-node ${CLAUDE_PLUGIN_ROOT}/tools/forge-engine.js <config-path> --output-dir <dir> --zip
+node ${CLAUDE_PLUGIN_ROOT}/tools/forge-engine.js <config-path> --output-dir <output_dir> --zip
 ```
+
+`<output_dir>` には事前収集済み回答の「出力先」パスを使用する。出力先が未指定の場合はカレントディレクトリを使用する。エンジンは `<output_dir>/{plugin_name}/` にファイルを展開し、`<output_dir>/{plugin_name}.plugin` としてZIPパッケージを生成する。
 
 エンジンが内部で実行する7ステップ:
 

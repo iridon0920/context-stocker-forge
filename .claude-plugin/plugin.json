@@ -1,6 +1,6 @@
 {
   "name": "context-stocker-forge",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "B2B事業チーム向けコンテキスト管理プラグイン（context-stocker）を対話型ウィザードで生成するメタプラグイン。案件管理・ナレッジ管理・活動ログ・レポート生成の仕組みをチーム専用プラグインとして自動生成する。",
   "author": {
     "name": "Irii Keita"
