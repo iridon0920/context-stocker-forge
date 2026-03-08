@@ -1,0 +1,42 @@
+{
+  "format_version": 1,
+  "product_name": "Zendesk",
+  "product_prefix": "zd",
+  "team_name": "SaaS営業部",
+  "plugin_name": "zendesk-context-stocker",
+  "storage": {
+    "type": "backlog-wiki",
+    "backlog_wiki": {
+      "project_key": "ZENDESK_PRJ"
+    }
+  },
+  "knowledge_categories": [
+    {
+      "name": "製品・技術仕様",
+      "description": "Zendesk各製品の機能・仕様・技術的なTips",
+      "required": true,
+      "sub_categories": ["Suite", "Support", "Guide"]
+    },
+    {
+      "name": "業務フロー・ガイドライン",
+      "description": "構築・移行・運用等の手順やベストプラクティス",
+      "required": true
+    }
+  ],
+  "sales_framework": "BANTCH",
+  "competitors": ["Freshdesk", "ServiceNow"],
+  "data_sources": {
+    "slack": {
+      "enabled": true,
+      "default_channels": [
+        { "name": "biz-zendesk", "id": "C001", "usage": "Zendesk事業全般" },
+        { "name": "team-zendesk", "id": "C002", "usage": "チーム内連絡" }
+      ]
+    },
+    "google_calendar": { "enabled": true },
+    "gmail": { "enabled": true },
+    "google_drive": { "enabled": true },
+    "backlog_issues": { "enabled": false }
+  },
+  "excluded_commands": []
+}

@@ -1,12 +1,12 @@
 ---
 description: コンテキスト管理プラグイン（context-stocker）を生成する
-argument-hint: "[再生成時: .team-config.ymlのパス]"
+argument-hint: "[再生成時: .team-config.jsonのパス]"
 allowed-tools: AskUserQuestion, Skill
 ---
 
 ## モード判定
 
-- **引数あり** → `$ARGUMENTS` を .team-config.yml のパスとして、Skillツールで `context-stocker-forge:generate` スキルを呼び出し再生成を実行（ウィザードスキップ）
+- **引数あり** → `$ARGUMENTS` を .team-config.json のパスとして、Skillツールで `context-stocker-forge:generate` スキルを呼び出し再生成を実行（ウィザードスキップ）
 - **引数なし** → 以下の新規ウィザードを実行
 
 ---

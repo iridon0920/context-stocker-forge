@@ -1,6 +1,6 @@
 # テンプレート合成ルール
 
-`.team-config.yml` の値をテンプレートファイルに埋め込み、プラグインファイルを生成する手順。
+`.team-config.json` の値をテンプレートファイルに埋め込み、プラグインファイルを生成する手順。
 
 ## テンプレート変数記法
 
@@ -8,7 +8,7 @@
 ```
 {{variable_name}}
 ```
-`.team-config.yml` のフィールド値で置換する。
+`.team-config.json` のフィールド値で置換する。
 
 ### 配列ループ展開
 ```
@@ -55,7 +55,7 @@
 
 ### カテゴリ2: 派生値（configから計算して生成）
 
-以下の変数は `.team-config.yml` から計算・導出する。テンプレート合成のStep 2で全て事前に計算すること。
+以下の変数は `.team-config.json` から計算・導出する。テンプレート合成のStep 2で全て事前に計算すること。
 
 | テンプレート変数 | 計算ルール | 例 |
 |-----------------|-----------|-----|
@@ -254,7 +254,7 @@
 
 ### Step 1: 設定ファイル読み込み
 ```
-config = parse_yaml(".team-config.yml")
+config = JSON.parse(read(".team-config.json"))
 ```
 
 ### Step 2: 派生値の計算
@@ -356,7 +356,7 @@ for cmd in config.excluded_commands:
 
 | テンプレートパス | 出力パス |
 |---------------|---------|
-| （ウィザード生成） | `.team-config.yml` |
+| （ウィザード生成） | `.team-config.json` |
 | `templates/plugin-json.template` | `.claude-plugin/plugin.json` |
 | `templates/readme.template` | `README.md` |
 | `templates/skills/deal/SKILL.md.template` | `skills/{pre}-deal/SKILL.md` |
@@ -397,7 +397,7 @@ commands/
 {plugin_name}/
 ├── .claude-plugin/
 │   └── plugin.json
-├── .team-config.yml
+├── .team-config.json
 ├── README.md
 ├── skills/
 │   ├── {pre}-deal/

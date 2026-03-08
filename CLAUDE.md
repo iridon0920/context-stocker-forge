@@ -2,7 +2,7 @@
 
 ## プロジェクト概要
 
-B2B事業チーム向けコンテキスト管理プラグイン（context-stocker）を対話型ウィザードで自動生成するメタプラグイン。Mustache風テンプレートエンジンで `.team-config.yml` から各チーム専用のプラグインを生成する。
+B2B事業チーム向けコンテキスト管理プラグイン（context-stocker）を対話型ウィザードで自動生成するメタプラグイン。Mustache風テンプレートエンジンで `.team-config.json` から各チーム専用のプラグインを生成する。
 
 ## ディレクトリ構成
 
@@ -93,7 +93,7 @@ context-stocker-forge/
 
 | 定義場所 | 種類 |
 |---------|------|
-| `skills/generate/references/config-schema.md` | `.team-config.yml` の直接フィールド |
+| `skills/generate/references/config-schema.md` | `.team-config.json` の直接フィールド |
 | `skills/generate/references/template-assembly.md` | configから計算される派生値 |
 | `storage-adapters/*.md` | ストレージ固有の操作コマンド |
 

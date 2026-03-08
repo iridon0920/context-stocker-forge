@@ -45,7 +45,7 @@
 
 ## デフォルト値
 
-チームメンバー設定は `.team-config.yml` に含まれない事後設定項目のため、デフォルト値は存在しない。
+チームメンバー設定は `.team-config.json` に含まれない事後設定項目のため、デフォルト値は存在しない。
 
 - 初回は `/{{product_prefix}}-admin members add` で対話的に登録する
 - 設定ページが存在しない場合、メンバー関連の提案機能はスキップされる（graceful degradation）

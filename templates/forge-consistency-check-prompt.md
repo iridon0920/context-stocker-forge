@@ -28,7 +28,7 @@ context-stocker-forge/
 │   └── generate/
 │       ├── SKILL.md                    # 生成スキル本体
 │       └── references/
-│           ├── config-schema.md        # .team-config.yml のスキーマ定義
+│           ├── config-schema.md        # .team-config.json のスキーマ定義
 │           ├── template-assembly.md    # テンプレート合成手順
 │           └── wizard-steps.md         # ウィザードのステップ定義
 ├── storage-adapters/
@@ -128,7 +128,7 @@ doc系コマンド（config, estimate, hearing, prep, proposal）の参照先セ
 
 `templates/` 配下で使用されている全テンプレート変数 `{{xxx}}` が、以下のいずれかで定義されているか確認する：
 
-- `config-schema.md` に `.team-config.yml` のフィールドとして定義
+- `config-schema.md` に `.team-config.json` のフィールドとして定義
 - `template-assembly.md` に派生値として定義（108-113行）
 - `storage-adapters/*.md` でストレージアダプタから注入される変数
 - ループ内変数（`{{#array}} ... {{variable}} ... {{/array}}`）

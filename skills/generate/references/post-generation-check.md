@@ -12,7 +12,7 @@
 
 **手順**:
 1. 生成された全出力ファイルを対象に `{{` パターンを検索
-2. `.team-config.yml` は検索対象から**除外**する（config内にテンプレート変数は残って良い）
+2. `.team-config.json` は検索対象から**除外**する（config内にテンプレート変数は残って良い）
 3. `forge-consistency-check-prompt.md` も除外する（forge自体のドキュメント）
 
 **判定**:
@@ -80,7 +80,7 @@
 **目的**: ストレージ関連の設定値が正しいことを確認する。
 
 **手順**:
-1. `project_key` / `base_path` の値が `.team-config.yml` の値と一致するか
+1. `project_key` / `base_path` の値が `.team-config.json` の値と一致するか
 2. ストレージ操作セクション（`{{storage_operations}}` で差し込まれた部分）内の `{{storage_project_key}}` / `{{storage_base_path}}` が解決済みか
 3. MCP ツール呼び出しのパラメータが正しいか（例: `get_project(projectKey: "{正しい値}")`)
 
@@ -98,7 +98,7 @@
 1. `template-assembly.md` の「出力ディレクトリ構成」と実際の出力を比較
 2. 必須ファイルが存在するか:
    - `.claude-plugin/plugin.json`
-   - `.team-config.yml`
+   - `.team-config.json`
    - `README.md`
    - `skills/{pre}-deal/SKILL.md`
    - `skills/{pre}-knowledge/SKILL.md`

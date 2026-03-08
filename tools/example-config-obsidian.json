@@ -1,0 +1,35 @@
+{
+  "format_version": 1,
+  "product_name": "Twilio",
+  "product_prefix": "tw",
+  "team_name": "CPaaS営業部",
+  "plugin_name": "twilio-context-stocker",
+  "storage": {
+    "type": "obsidian-vault",
+    "obsidian_vault": {
+      "base_path": "twilio"
+    }
+  },
+  "knowledge_categories": [
+    {
+      "name": "製品・技術仕様",
+      "description": "Twilio各製品の機能・仕様・技術的なTips",
+      "required": true,
+      "sub_categories": ["Voice", "SMS", "Video"]
+    },
+    {
+      "name": "業務フロー・ガイドライン",
+      "description": "構築・移行・運用等の手順やベストプラクティス",
+      "required": true
+    }
+  ],
+  "sales_framework": "MEDDIC",
+  "data_sources": {
+    "slack": { "enabled": true, "default_channels": [] },
+    "google_calendar": { "enabled": true },
+    "gmail": { "enabled": false },
+    "google_drive": { "enabled": false },
+    "backlog_issues": { "enabled": false }
+  },
+  "excluded_commands": ["doc-estimate", "engdoc-testcases"]
+}
