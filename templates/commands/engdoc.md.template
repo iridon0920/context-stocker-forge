@@ -1,6 +1,7 @@
 ---
 description: "導入支援文書 — hearing(ヒアリングリスト) / config(設定シート) / testcases(テストケース)"
 argument-hint: "<種別> [企業名 or コンテキストID]"
+allowed-tools: AskUserQuestion, Skill
 ---
 
 $ARGUMENTS の最初のトークンを種別として解釈し、対応するガイドラインでドキュメントを生成する。Skillツールで `{{plugin_name}}:{{product_prefix}}-doc` スキルを呼び出し、「ガイドライン参照による業務ドキュメント生成」セクションの手順に従って実行すること。
@@ -19,7 +20,20 @@ $ARGUMENTS の最初のトークンを種別として解釈し、対応するガ
 | testcases | テストケース | `ガイドライン/テストケース` |
 {{/excluded_engdoc_testcases}}
 
-引数なしの場合は上記一覧を表示して確認する。
+引数なしの場合はAskUserQuestionツールで以下の選択肢を提示し、種別を選択してもらう:
+
+選択肢（除外設定に応じて該当するもののみ表示）:
+{{^excluded_engdoc_hearing}}
+- hearing — {{product_name}}のヒアリングリスト
+{{/excluded_engdoc_hearing}}
+{{^excluded_engdoc_config}}
+- config — {{product_name}}の設定シート
+{{/excluded_engdoc_config}}
+{{^excluded_engdoc_testcases}}
+- testcases — テストケース
+{{/excluded_engdoc_testcases}}
+
+選択後、選択された種別で以降の種別ごとの処理を実行する。
 
 ## 種別ごとの補足
 

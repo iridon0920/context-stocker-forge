@@ -61,6 +61,7 @@ context-stocker-forge/
 | 変更元 | 連動先 | 連動内容 |
 |--------|--------|----------|
 | `skills/generate/references/wizard-steps.md` | `skills/generate/SKILL.md` | ウィザードのステップ数・構成 |
+| `skills/generate/references/wizard-steps.md` | `commands/generate.md` | ウィザードの質問文・バリデーション・選択肢 |
 | `templates/commands/**/*.template` | `README.md` | コマンド一覧・コマンド数 |
 | `templates/commands/**/*.template` の参照セクション名 | `templates/skills/*/SKILL.md.template` | 各コマンドが参照するスキルのセクション名の一致 |
 | `templates/skills/deal/SKILL.md.template` の判断フロー | `templates/commands/**/*.template` | コマンド名の存在 |

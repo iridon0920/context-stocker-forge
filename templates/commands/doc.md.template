@@ -1,6 +1,7 @@
 ---
 description: "プリセールス文書 — prep(商談準備) / proposal(提案書) / estimate(見積)"
 argument-hint: "<種別> [企業名 or コンテキストID]"
+allowed-tools: AskUserQuestion, Skill
 ---
 
 $ARGUMENTS の最初のトークンを種別として解釈し、対応するガイドラインでドキュメントを生成する。Skillツールで `{{plugin_name}}:{{product_prefix}}-doc` スキルを呼び出し、「ガイドライン参照による業務ドキュメント生成」セクションの手順に従って実行すること。
@@ -19,7 +20,20 @@ $ARGUMENTS の最初のトークンを種別として解釈し、対応するガ
 | estimate | {{product_name}}の概算見積もり | `ガイドライン/見積書作成` |
 {{/excluded_doc_estimate}}
 
-引数なしの場合は上記一覧を表示して確認する。
+引数なしの場合はAskUserQuestionツールで以下の選択肢を提示し、種別を選択してもらう:
+
+選択肢（除外設定に応じて該当するもののみ表示）:
+{{^excluded_doc_prep}}
+- prep — {{product_name}}の商談準備資料
+{{/excluded_doc_prep}}
+{{^excluded_doc_proposal}}
+- proposal — {{product_name}}の提案書ドラフト
+{{/excluded_doc_proposal}}
+{{^excluded_doc_estimate}}
+- estimate — {{product_name}}の概算見積もり
+{{/excluded_doc_estimate}}
+
+選択後、選択された種別で以降の種別ごとの処理を実行する。
 
 ## 種別ごとの補足
 

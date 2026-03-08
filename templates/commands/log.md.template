@@ -1,6 +1,7 @@
 ---
 description: "活動ログ — daily(日次ログ) / weekly(週次レポート) / report(月次・QBR・年次レポート)"
 argument-hint: "<daily|weekly|report> [引数...]"
+allowed-tools: AskUserQuestion, Skill
 ---
 
 $ARGUMENTS の最初のトークンをサブコマンドとして解釈し、対応する処理を実行する。
@@ -19,7 +20,20 @@ $ARGUMENTS の最初のトークンをサブコマンドとして解釈し、対
 | report | 活動レポートを生成（月次/QBR/年次） | [monthly\|qbr\|annual] [YYYY-MM\|YYYY-Q#\|YYYY] [--format md\|pptx\|both] |
 {{/excluded_log_report}}
 
-引数なしの場合は上記一覧を表示して、実行したいサブコマンドを確認する。
+引数なしの場合はAskUserQuestionツールで以下の選択肢を提示し、サブコマンドを選択してもらう:
+
+選択肢（除外設定に応じて該当するもののみ表示）:
+{{^excluded_log_daily}}
+- daily — 日次活動ログを記録
+{{/excluded_log_daily}}
+{{^excluded_log_weekly}}
+- weekly — 週次レポートを生成（重要度ティア分類）
+{{/excluded_log_weekly}}
+{{^excluded_log_report}}
+- report — 活動レポートを生成（月次/QBR/年次）
+{{/excluded_log_report}}
+
+選択後、選択されたサブコマンドで以降のサブコマンド処理を実行する。
 
 ---
 

@@ -1,6 +1,7 @@
 ---
 description: "管理コマンド — setup(初期設定) / slack(Slack設定) / competitors(競合情報) / pricing(料金体系) / members(チームメンバー) / kpi-set(KPI) / okr-set(OKR) / index(INDEX再構築) / backlog(Backlog設定) / stale(鮮度確認) / migrate(フォーマット更新)"
 argument-hint: "<サブコマンド> [引数...]"
+allowed-tools: AskUserQuestion, Skill
 ---
 
 $ARGUMENTS の最初のトークンをサブコマンドとして解釈し、対応するセクションの処理を実行する。
@@ -43,7 +44,44 @@ $ARGUMENTS の最初のトークンをサブコマンドとして解釈し、対
 | migrate | ストレージ内データのフォーマット更新 | なし |
 {{/excluded_admin_migrate}}
 
-引数なしの場合は上記一覧を表示して、実行したいサブコマンドを確認する。
+引数なしの場合はAskUserQuestionツールで以下の選択肢を提示し、サブコマンドを選択してもらう:
+
+選択肢（除外設定に応じて該当するもののみ表示）:
+{{^excluded_admin_setup}}
+- setup — セットアップ検証と初期設定ガイド
+{{/excluded_admin_setup}}
+{{^excluded_admin_index}}
+- index — INDEXページ群を全再構築
+{{/excluded_admin_index}}
+{{^excluded_admin_slack}}
+- slack — Slack重点チャンネル設定の表示・編集
+{{/excluded_admin_slack}}
+{{^excluded_admin_backlog}}
+- backlog — Backlog監視プロジェクト設定の表示・編集
+{{/excluded_admin_backlog}}
+{{^excluded_admin_competitors}}
+- competitors — 競合情報設定の表示・編集
+{{/excluded_admin_competitors}}
+{{^excluded_admin_pricing}}
+- pricing — 料金体系設定の表示・編集
+{{/excluded_admin_pricing}}
+{{^excluded_admin_members}}
+- members — チームメンバー設定の表示・編集
+{{/excluded_admin_members}}
+{{^excluded_admin_kpi_set}}
+- kpi-set — KPI目標・実績の設定・更新
+{{/excluded_admin_kpi_set}}
+{{^excluded_admin_okr_set}}
+- okr-set — OKR目標・進捗の設定・更新
+{{/excluded_admin_okr_set}}
+{{^excluded_admin_stale}}
+- stale — 更新が停滞しているページを検出
+{{/excluded_admin_stale}}
+{{^excluded_admin_migrate}}
+- migrate — ストレージ内データのフォーマット更新
+{{/excluded_admin_migrate}}
+
+選択後、選択されたサブコマンドで以降のサブコマンド処理を実行する。
 
 ---
 
