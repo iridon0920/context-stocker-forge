@@ -80,6 +80,14 @@
 | `{{slack_workspace_domain}}` | Slack MCPまたはconfigから。不明時は空文字 | `classmethod` |
 | `{{sales_framework_name}}` | `sales_framework` の表示名。組み込み名はそのまま、カスタム時は `sales_framework` 値 | `BANTCH` |
 | `{{sales_framework_sections}}` | `sales_framework_fields` からMarkdownセクションを生成 | （後述） |
+| `{{context_hierarchy_pattern}}` | ストレージ種別と `customer_classifications` から生成する2階層管理パターンの表記 | `案件/{分類}/{顧客名}` 配下に案件ページを作成 |
+| `{{customer_classification_example_path}}` | 最初の `customer_classifications[0]` の `classification_name` と `classification_example` + 案件名例を結合した具体例パス | `見込客/Acme Corp/SaaS導入` |
+| `{{customer_classification_from}}` | `customer_classifications[0].classification_name`（顧客ステータス変更の変更元分類） | `見込客` |
+| `{{customer_classification_to}}` | `customer_classifications[1].classification_name`（顧客ステータス変更の変更先分類） | `既存顧客` |
+| `{{deal_name_examples}}` | `product_name` に基づく案件名の命名例を生成 | `Acme Zendesk導入, XYZ 保守契約更新` |
+| `{{deal_status_options}}` | 案件ステータスの選択肢。デフォルト固定値 | `進行中 / 完了 / 失注` |
+| `{{deal_type_options}}` | 案件種別の選択肢。デフォルト固定値 | `新規 / アップセル / クロスセル` |
+| `{{official_source_name}}` | 公式情報源の名称。configの `official_sources` から生成、未設定時はデフォルト | `公式ドキュメント` |
 
 #### 営業フレームワークの自動展開
 
@@ -175,18 +183,18 @@
 
 | ブロック名 | ソース | ループ内で使える変数 |
 |-----------|--------|---------------------|
-| `{{#knowledge_categories}}` | `knowledge_categories[]` | `{{name}}`, `{{description}}`, `{{#has_subcategories}}`, `{{#sub_categories}}...{{/sub_categories}}` |
-| `{{#sub_categories}}` | `knowledge_categories[].sub_categories[]` | `{{.}}`（文字列値そのもの） |
-| `{{#competitors}}` | `competitors[]` | `{{.}}`（文字列値そのもの） |
+| `{{#knowledge_categories}}` | `knowledge_categories[]` | `{{name}}`, `{{description}}`, `{{#has_subcategories}}`, `{{#subcategories}}...{{/subcategories}}` |
+| `{{#subcategories}}` | `knowledge_categories[].sub_categories[]` | `{{.}}`（文字列値そのもの） |
+| `{{#competitors}}` | `competitors[]` | `{{name}}`（競合名） |
 | `{{#kpi_revenue_categories}}` | `kpi.revenue_categories[]` | `{{.}}`（文字列値そのもの） |
 | `{{#sales_framework_fields}}` | `sales_framework_fields[]` | `{{name}}`, `{{description}}`, `{{key}}` |
 | `{{#default_slack_channels}}` | `data_sources.slack.default_channels[]` | `{{name}}`, `{{id}}`, `{{usage}}` → テンプレートでは `{{channel_name}}`, `{{channel_purpose}}` |
 | `{{#default_backlog_projects}}` | `data_sources.backlog_issues.projects[]` | `{{key}}`, `{{name}}` → テンプレートでは `{{project_key_value}}`, `{{project_display_name}}`, `{{project_purpose}}` |
-| `{{#data_sources}}` | 有効なデータソース一覧 | `{{name}}`, `{{description}}` |
+| `{{#data_sources}}` | 有効なデータソース一覧 | `{{name}}`, `{{description}}`, `{{source_hint}}` |
 | `{{#index_pages}}` | INDEX構成定義（派生値で生成） | `{{index_name}}`, `{{index_description}}` |
 | `{{#migration_warnings}}` | ナレッジカテゴリ固有の注意事項 | `{{warning_text}}` |
 | `{{#official_sources}}` | 公式情報源リスト（派生値で生成） | `{{source_name}}`, `{{source_description}}`, `{{source_url}}` |
-| `{{#official_source_urls}}` | 公式URL一覧 | `{{source_name}}`, `{{source_url}}` |
+| `{{#official_source_urls}}` | 公式URL一覧 | `{{source_name}}`, `{{source_url}}`, `{{source_type}}` |
 | `{{#official_source_search_steps}}` | 公式情報検索手順 | `{{step_index}}`, `{{step_description}}` |
 | `{{#stale_thresholds}}` | 鮮度しきい値定義 | `{{monitoring_type}}`, `{{warn_days}}`, `{{danger_days}}` |
 | `{{#doc_commands}}` | ドキュメント生成コマンド一覧 | `{{command_group}}`, `{{command_action}}`, `{{guideline_name}}`, `{{command_description}}` |
@@ -196,10 +204,10 @@
 | `{{#product_environment_section}}` | 製品環境セクション | `{{product_environment_description}}` |
 | `{{#product_subcategories}}` | 製品サブカテゴリ | `{{subcategory_name}}`, `{{subcategory_scope}}`, `{{subcategory_scope_short}}`, `{{subcategory_parent}}`, `{{subcategory_parent_item}}` |
 | `{{#knowledge_category_sections}}` | ナレッジカテゴリセクション | `{{section_name}}`, `{{section_content}}`, `{{section_category_name}}` |
-| `{{#knowledge_index_mapping}}` | ナレッジINDEXマッピング | `{{category_name}}`, `{{category_path}}`, `{{category_save_hint}}`, `{{category_content_description}}`, `{{category_example_subcategory}}`, `{{category_example_topic}}`, `{{category_label}}` |
-| `{{#index_format_rules}}` | INDEXフォーマットルール | `{{index_page_name}}`, `{{index_page_display_name}}`, `{{index_page_description}}`, `{{index_page_body_template}}`, `{{index_page_header_extra}}` |
-| `{{#index_rebuild_classification_rules}}` | INDEX再構築分類ルール | 各分類ルール固有変数 |
-| `{{#deal_grouping_rules}}` | 案件グルーピングルール | `{{classification_name}}`, `{{classification_label}}` |
+| `{{#knowledge_index_mapping}}` | ナレッジINDEXマッピング | `{{category_name}}`, `{{category_path}}`, `{{category_save_hint}}`, `{{category_content_description}}`, `{{category_example_subcategory}}`, `{{category_example_topic}}`, `{{category_label}}`, `{{mapped_categories}}`, `{{mapped_categories_short}}` |
+| `{{#index_format_rules}}` | INDEXフォーマットルール | `{{index_page_name}}`, `{{index_page_display_name}}`, `{{index_page_description}}`, `{{index_page_body_template}}`, `{{index_page_header_extra}}`, `{{rule_description}}` |
+| `{{#index_rebuild_classification_rules}}` | INDEX再構築分類ルール | `{{path_prefix}}`, `{{classification_target}}` |
+| `{{#deal_grouping_rules}}` | 案件グルーピングルール | `{{condition}}`, `{{result}}`, `{{classification_name}}`, `{{classification_label}}` |
 | `{{#auto_search_rules}}` | 自動検索ルール | `{{search_trigger}}`, `{{search_example}}`, `{{search_category_path}}`, `{{auto_search_index}}`, `{{auto_action}}` |
 | `{{#storage_auto_fields}}` | ストレージ自動フィールド | `{{field_name}}`, `{{field_description}}` |
 | `{{#uncollected_info_flags}}` | 未収集情報フラグ | `{{flag_condition}}`, `{{result}}` |
