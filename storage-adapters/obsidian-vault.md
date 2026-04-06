@@ -23,7 +23,9 @@
 {{storage_base_path}}/
 ├── deals/          ← 案件コンテキスト
 │   ├── {顧客名}/
-│   │   └── {案件名}.md
+│   │   ├── {案件名}.md          ← 案件ページ
+│   │   └── {案件名}/            ← MTG格納ディレクトリ
+│   │       └── {YYYY-MM-DD_議題}.md  ← MTGページ
 │   └── INDEX.md
 ├── knowledge/         ← ナレッジベース
 │   ├── {カテゴリ名}/
@@ -59,7 +61,9 @@ write_note(
 ```
 
 ファイルパスの命名規則:
-- コンテキスト: `{{storage_base_path}}/deals/{顧客名}/{案件名}.md`
+- コンテキスト（顧客）: `{{storage_base_path}}/deals/{顧客名}/{顧客名}.md`
+- コンテキスト（案件）: `{{storage_base_path}}/deals/{顧客名}/{案件名}.md`
+- コンテキスト（MTG）: `{{storage_base_path}}/deals/{顧客名}/{案件名}/{YYYY-MM-DD_議題}.md`
 - ナレッジ: `{{storage_base_path}}/knowledge/{カテゴリ名}/{ページ名}.md`
 - 活動ログ: `{{storage_base_path}}/logs/{YYYY-MM}/{YYYY-MM-DD}.md`
 - INDEX: `{{storage_base_path}}/HOME.md`, `{{storage_base_path}}/deals/INDEX.md`, etc.

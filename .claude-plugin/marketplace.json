@@ -5,14 +5,14 @@
   },
   "metadata": {
     "description": "B2B事業チーム向けコンテキスト管理プラグインを対話型ウィザードで自動生成するメタプラグイン",
-    "version": "0.9.1"
+    "version": "0.10.0"
   },
   "plugins": [
     {
       "name": "context-stocker-forge",
       "source": "./",
       "description": "案件管理・ナレッジ管理・活動ログ・レポート生成の仕組みをチーム専用プラグインとして自動生成。対話型ウィザードで商材情報をヒアリングし、Backlog WikiまたはObsidian Vaultをストレージとしたcontext-stockerプラグインを出力する。",
-      "version": "0.9.1",
+      "version": "0.10.0",
       "author": {
         "name": "Irii Keita"
       },

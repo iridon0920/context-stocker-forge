@@ -80,7 +80,7 @@
 | `{{slack_workspace_domain}}` | Slack MCPまたはconfigから。不明時は空文字 | `classmethod` |
 | `{{sales_framework_name}}` | `sales_framework` の表示名。組み込み名はそのまま、カスタム時は `sales_framework` 値 | `BANTCH` |
 | `{{sales_framework_sections}}` | `sales_framework_fields` からMarkdownセクションを生成 | （後述） |
-| `{{context_hierarchy_pattern}}` | ストレージ種別と `customer_classifications` から生成する2階層管理パターンの表記 | `案件/{分類}/{顧客名}` 配下に案件ページを作成 |
+| `{{context_hierarchy_pattern}}` | ストレージ種別と `customer_classifications` から生成する3階層管理パターンの表記 | `案件/{分類}/{顧客名}` 配下に案件ページ、さらに案件配下にMTGページを作成 |
 | `{{customer_classification_example_path}}` | 最初の `customer_classifications[0]` の `classification_name` と `classification_example` + 案件名例を結合した具体例パス | `見込客/Acme Corp/SaaS導入` |
 | `{{customer_classification_from}}` | `customer_classifications[0].classification_name`（顧客ステータス変更の変更元分類） | `見込客` |
 | `{{customer_classification_to}}` | `customer_classifications[1].classification_name`（顧客ステータス変更の変更先分類） | `既存顧客` |
@@ -133,11 +133,11 @@
 | `{{storage_save_knowledge_procedure}}` | 同上（パスがナレッジ配下） |
 | `{{storage_index_rebuild_procedure}}` | 全ページ取得→集計→INDEX更新の手順 |
 | `{{storage_index_update_procedure}}` | 差分のみINDEX更新の手順 |
-| `{{storage_hierarchy_description}}` | `Wiki名でパス表現（例: 案件/顧客名/案件名）` |
+| `{{storage_hierarchy_description}}` | `Wiki名でパス表現（例: 案件/顧客名/案件名、MTG: 案件/顧客名/案件名/YYYY-MM-DD_議題）` |
 | `{{storage_mcp_tool_table}}` | Backlog MCPツール一覧テーブル（`get_project`, `add_wiki`, `get_wiki_pages`, `get_wiki`, `update_wiki`） |
 | `{{storage_mcp_tool_table_knowledge}}` | ナレッジ用MCP操作テーブル |
 | `{{storage_link_format_rules}}` | `[[ページ名]]` 形式のリンクルール |
-| `{{storage_link_format_rules_context}}` | `[[案件/顧客名/案件名]]` |
+| `{{storage_link_format_rules_context}}` | `[[案件/顧客名/案件名]]`（MTG: `[[案件/顧客名/案件名/YYYY-MM-DD_議題]]`） |
 | `{{storage_link_format_rules_index}}` | `[[INDEX/カテゴリ名]]` |
 | `{{storage_link_format_rules_knowledge}}` | `[[ナレッジ/カテゴリ/トピック]]` |
 | `{{storage_page_url_prefix}}` | `https://{space}.backlog.com/wiki/{project_key}/` |
@@ -165,11 +165,11 @@
 | `{{storage_save_knowledge_procedure}}` | 同上（パスがナレッジ配下） |
 | `{{storage_index_rebuild_procedure}}` | `list_directory` で全件取得→集計→`write_note` でINDEX更新の手順 |
 | `{{storage_index_update_procedure}}` | 差分のみINDEX更新の手順 |
-| `{{storage_hierarchy_description}}` | `ファイルパスで階層表現（例: {base_path}/deals/顧客名/案件名.md）` |
+| `{{storage_hierarchy_description}}` | `ファイルパスで階層表現（例: {base_path}/deals/顧客名/案件名.md、MTG: {base_path}/deals/顧客名/案件名/YYYY-MM-DD_議題.md）` |
 | `{{storage_mcp_tool_table}}` | Obsidian MCPツール一覧テーブル（`read_note`, `write_note`, `patch_note`, `search_notes`, `list_directory`, `update_frontmatter`） |
 | `{{storage_mcp_tool_table_knowledge}}` | ナレッジ用MCP操作テーブル |
 | `{{storage_link_format_rules}}` | `[[ファイル名]]` 形式のリンクルール |
-| `{{storage_link_format_rules_context}}` | `[[deals/顧客名/案件名]]` |
+| `{{storage_link_format_rules_context}}` | `[[deals/顧客名/案件名]]`（MTG: `[[deals/顧客名/案件名/YYYY-MM-DD_議題]]`） |
 | `{{storage_link_format_rules_index}}` | `[[HOME]]` or `[[deals/INDEX]]` |
 | `{{storage_link_format_rules_knowledge}}` | `[[knowledge/カテゴリ/トピック]]` |
 | `{{storage_page_url_prefix}}` | `obsidian://open?vault=...&file=` |
